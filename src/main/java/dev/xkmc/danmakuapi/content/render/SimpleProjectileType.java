@@ -27,7 +27,7 @@ public record SimpleProjectileType(ResourceLocation tex, DisplayType display)
 	@Override
 	public void create(Consumer<Ins> holder, ProjectileRenderer<?> r, SimplifiedProjectile e, PoseStack pose, float pTick) {
 		pose.mulPose(r.cameraOrientation());
-		var sim4 = pose.last().pose();
+		var sim4 = new Matrix4f(pose.last().pose());
 		int col = DanmakuRenderStates.fading(display, -1, r, e);
 		holder.accept(new Ins(sim4, col));
 	}

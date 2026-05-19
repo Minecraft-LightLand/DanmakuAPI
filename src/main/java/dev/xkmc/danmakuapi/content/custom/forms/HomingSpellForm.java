@@ -9,7 +9,7 @@ import dev.xkmc.danmakuapi.content.spell.spellcard.CardHolder;
 import dev.xkmc.danmakuapi.content.spell.spellcard.Ticker;
 import dev.xkmc.l2serial.serialization.marker.SerialClass;
 import dev.xkmc.l2serial.serialization.marker.SerialField;
-import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.phys.Vec3;
 
 @SerialClass
@@ -27,7 +27,7 @@ public class HomingSpellForm extends ISpellForm<HomingSpellFormData> {
 	}
 
 	@Override
-	public boolean tick(Player player) {
+	public boolean tick(LivingEntity player) {
 		if (holder == null)
 			holder = new PlayerHolder(player, dir, this, null);
 		var o = DanmakuHelper.getOrientation(dir);

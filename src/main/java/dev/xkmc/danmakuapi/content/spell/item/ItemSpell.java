@@ -8,9 +8,7 @@ import dev.xkmc.l2serial.serialization.marker.SerialClass;
 import dev.xkmc.l2serial.serialization.marker.SerialField;
 import dev.xkmc.l2serial.util.Wrappers;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
@@ -34,8 +32,8 @@ public class ItemSpell {
 	private LivingEntity targetCache;
 	protected CardHolder holder;
 
-	public void start(Player player, @Nullable LivingEntity target) {
-		this.dir = RayTraceUtil.getRayTerm(Vec3.ZERO, player.getXRot(), player.getYRot(), 1);
+	public void start(LivingEntity entity, @Nullable LivingEntity target) {
+		this.dir = RayTraceUtil.getRayTerm(Vec3.ZERO, entity.getXRot(), entity.getYRot(), 1);
 		if (target != null) {
 			targetId = target.getUUID();
 			targetPos = target.position().add(0, target.getBbHeight() / 2, 0);
@@ -63,11 +61,11 @@ public class ItemSpell {
 		}
 	}
 
-	public boolean tick(Player player) {
-		if (!(player instanceof ServerPlayer sp)) return true;
-		var target = getTarget(sp.serverLevel());
+	public boolean tick(LivingEntity entity) {
+		if (!(entity.level() instanceof ServerLevel sl)) return true;
+		var target = getTarget(sl);
 		if (target != null) targetPos = target.position().add(0, target.getBbHeight() / 2, 0);
-		holder = new PlayerHolder(player, dir, this, target);
+		holder = new PlayerHolder(entity, dir, this, target);
 		tickers.removeIf(e -> e.tick(holder, Wrappers.cast(this)));
 		cache.removeIf(e -> !e.isValid());
 		return tickers.isEmpty();

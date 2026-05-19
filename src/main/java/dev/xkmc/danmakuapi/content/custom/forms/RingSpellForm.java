@@ -6,7 +6,7 @@ import dev.xkmc.danmakuapi.content.spell.item.PlayerHolder;
 import dev.xkmc.l2serial.serialization.marker.SerialClass;
 import dev.xkmc.l2serial.serialization.marker.SerialField;
 import net.minecraft.util.Mth;
-import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.LivingEntity;
 
 @SerialClass
 public class RingSpellForm extends ISpellForm<RingSpellFormData> {
@@ -23,7 +23,7 @@ public class RingSpellForm extends ISpellForm<RingSpellFormData> {
 	}
 
 	@Override
-	public boolean tick(Player player) {
+	public boolean tick(LivingEntity player) {
 		if (holder == null)
 			holder = new PlayerHolder(player, dir, this, null);
 		var o = DanmakuHelper.getOrientation(dir);

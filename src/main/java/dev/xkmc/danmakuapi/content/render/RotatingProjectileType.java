@@ -27,7 +27,7 @@ public record RotatingProjectileType(ResourceLocation tex, DisplayType display, 
 	public void create(Consumer<Ins> holder, ProjectileRenderer<?> r, SimplifiedProjectile e, PoseStack pose, float pTick) {
 		pose.mulPose(r.cameraOrientation());
 		pose.mulPose(Axis.ZP.rotationDegrees((e.tickCount + pTick) * 360f / (float) rot));
-		var sim4 = pose.last().pose();
+		var sim4 = new Matrix4f(pose.last().pose());
 		int col = DanmakuRenderStates.fading(display, -1, r, e);
 		holder.accept(new Ins(sim4, col));
 	}

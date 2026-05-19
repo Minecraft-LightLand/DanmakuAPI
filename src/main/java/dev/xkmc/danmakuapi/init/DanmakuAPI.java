@@ -3,13 +3,11 @@ package dev.xkmc.danmakuapi.init;
 import com.mojang.logging.LogUtils;
 import com.tterrag.registrate.providers.ProviderType;
 import dev.xkmc.danmakuapi.content.custom.screen.SpellSetToServer;
-import dev.xkmc.danmakuapi.content.virtual.ClientDanmakuCache;
 import dev.xkmc.danmakuapi.content.virtual.DanmakuToClientPacket;
 import dev.xkmc.danmakuapi.content.virtual.EraseDanmakuToClient;
 import dev.xkmc.danmakuapi.init.data.*;
 import dev.xkmc.danmakuapi.init.registrate.DanmakuEntities;
 import dev.xkmc.danmakuapi.init.registrate.DanmakuItems;
-import dev.xkmc.fastprojectileapi.render.ProjectileRenderHelper;
 import dev.xkmc.l2core.init.reg.registrate.L2Registrate;
 import dev.xkmc.l2core.init.reg.registrate.SimpleEntry;
 import dev.xkmc.l2core.init.reg.simple.Reg;
@@ -46,7 +44,6 @@ public class DanmakuAPI {
 		DanmakuItems.register();
 		DanmakuEntities.register();
 		DanmakuConfig.init();
-		ProjectileRenderHelper.LIST.add(ClientDanmakuCache::get);
 	}
 
 	@SubscribeEvent(priority = EventPriority.HIGH)

@@ -58,6 +58,13 @@ public interface IDanmakuEntity extends GrazingEntity {
 			e = pe.getParent();
 		}
 		if (e instanceof LivingEntity le) target = le;
+		if (target != null) {
+			DamageSource last = target.getLastDamageSource();
+			int time = target.getLastHurtByMobTimestamp();
+			if (last != null && last.getDirectEntity() instanceof IDanmakuEntity && time + 5 > target.tickCount) {
+				return;
+			}
+		}
 		var owner = self().getOwner();
 		if (target != null && owner instanceof IYoukaiEntity youkai) {
 			youkai.danmakuHitTarget(this, source, target);
@@ -68,15 +75,9 @@ public interface IDanmakuEntity extends GrazingEntity {
 				if (!GrazeHelper.shouldPlayerHurt(player, le)) return;
 			}
 		}
-		if (target != null) {
-			DamageSource last = target.getLastDamageSource();
-			int time = target.getLastHurtByMobTimestamp();
-			if (last != null && last.getDirectEntity() instanceof IDanmakuEntity && time + 5 > target.tickCount) {
-				return;
-			}
-			target.hurt(source, damage(e));
-
-		} else e.hurt(source, damage(e));
+		if (target != null)
+			target.hurt(source, damage(target));
+		else e.hurt(source, damage(e));
 	}
 
 	@Override

@@ -15,8 +15,6 @@ import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.entity.PartEntity;
 import org.jetbrains.annotations.Nullable;
 
-import java.awt.*;
-
 public interface IDanmakuEntity extends GrazingEntity {
 
 	float GRAZE_RANGE = 1.5f;
@@ -54,16 +52,7 @@ public interface IDanmakuEntity extends GrazingEntity {
 	default void hurtTarget(EntityHitResult result) {
 		if (self().level().isClientSide) return;
 		var e = result.getEntity();
-		if (e instanceof LivingEntity le) {
-			if (le.hurtTime > 0) {
-				DamageSource source = le.getLastDamageSource();
-				if (source != null && source.getDirectEntity() instanceof IDanmakuEntity) {
-					return;
-				}
-			}
-		}
 		DamageSource source = source();
-		boolean immune = !e.hurt(source, damage(e));
 		LivingEntity target = null;
 		while (e instanceof PartEntity<?> pe) {
 			e = pe.getParent();
@@ -79,7 +68,15 @@ public interface IDanmakuEntity extends GrazingEntity {
 				if (!GrazeHelper.shouldPlayerHurt(player, le)) return;
 			}
 		}
-		e.hurt(source, damage(e));
+		if (target != null) {
+			DamageSource last = target.getLastDamageSource();
+			int time = target.getLastHurtByMobTimestamp();
+			if (last != null && last.getDirectEntity() instanceof IDanmakuEntity && time + 5 > target.tickCount) {
+				return;
+			}
+			target.hurt(source, damage(e));
+
+		} else e.hurt(source, damage(e));
 	}
 
 	@Override

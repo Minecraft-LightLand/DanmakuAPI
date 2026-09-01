@@ -16,6 +16,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.phys.Vec3;
 import org.joml.Quaternionf;
+
 public class ItemBulletRenderer<T extends ItemBulletEntity> extends EntityRenderer<T> implements ProjectileRenderer<T> {
 
 	public ItemBulletRenderer(EntityRendererProvider.Context pContext) {
@@ -28,13 +29,15 @@ public class ItemBulletRenderer<T extends ItemBulletEntity> extends EntityRender
 
 	@Override
 	public double fading(SimplifiedProjectile e) {
+		double selfFading = DanmakuConfig.CLIENT.selfDanmakuFading.get();
 		if (entityRenderDispatcher.camera.getEntity() == e.getOwner()) {
 			double dist = entityRenderDispatcher.camera.getPosition().distanceTo(e.position());
-			double fading = DanmakuConfig.CLIENT.selfDanmakuFading.get();
-			return Math.min((dist - 2) / 12, 1) * fading;
+			if (e instanceof ItemBulletEntity ibe && ibe.getItem().getItem() instanceof DanmakuItem item)
+				selfFading = item.modifyFading(selfFading);
+			return Math.min((dist - 2) / 12, 1) * selfFading;
 		}
 		double fading = DanmakuConfig.CLIENT.farDanmakuFading.get();
-		double global = GrazeHelper.globalInvulTime > 0 ? DanmakuConfig.CLIENT.selfDanmakuFading.get() : 1;
+		double global = GrazeHelper.globalInvulTime > 0 ? selfFading : 1;
 		if (fading == 0) return global;
 		double dist = entityRenderDispatcher.camera.getPosition().distanceTo(e.position());
 		double start = DanmakuConfig.CLIENT.fadingStart.get();

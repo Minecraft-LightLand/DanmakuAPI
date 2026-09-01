@@ -5,6 +5,7 @@ import dev.xkmc.danmakuapi.api.DanmakuUseEvent;
 import dev.xkmc.danmakuapi.api.GrazeHelper;
 import dev.xkmc.danmakuapi.content.entity.ItemBulletEntity;
 import dev.xkmc.danmakuapi.content.render.ButterflyProjectileType;
+import dev.xkmc.danmakuapi.content.render.RenderableDanmakuType;
 import dev.xkmc.danmakuapi.content.render.RotatingProjectileType;
 import dev.xkmc.danmakuapi.content.render.SimpleProjectileType;
 import dev.xkmc.danmakuapi.content.spell.item.SpellContainer;
@@ -12,7 +13,6 @@ import dev.xkmc.danmakuapi.init.DanmakuAPI;
 import dev.xkmc.danmakuapi.init.data.DanmakuConfig;
 import dev.xkmc.danmakuapi.init.data.DanmakuLang;
 import dev.xkmc.danmakuapi.init.registrate.DanmakuEntities;
-import dev.xkmc.danmakuapi.init.registrate.DanmakuItems;
 import dev.xkmc.fastprojectileapi.render.ProjTypeHolder;
 import dev.xkmc.fastprojectileapi.render.RenderableProjectileType;
 import dev.xkmc.l2library.content.raytrace.RayTraceUtil;
@@ -88,19 +88,27 @@ public class DanmakuItem extends Item {
 			list.add(DanmakuLang.DANMAKU_BYPASS.get());
 	}
 
+	protected RenderableDanmakuType<?, ?> buildRenderer() {
+		var loc = DanmakuAPI.loc("textures/entity/bullet/" + type.getName() + "/" + color.getName() + ".png");
+		return switch (type) {
+			case BUTTERFLY -> new ButterflyProjectileType(loc, type.display(), 20);
+			case SPARK -> new RotatingProjectileType(loc, type.display(), 20);
+			case STAR -> new RotatingProjectileType(loc, type.display(), 40);
+			default -> new SimpleProjectileType(loc, type.display());
+		};
+	}
+
 	private ProjTypeHolder<? extends RenderableProjectileType<?, ?>, ?> render;
 
 	public ProjTypeHolder<? extends RenderableProjectileType<?, ?>, ?> getTypeForRender() {
 		if (render == null) {
-			var loc = DanmakuAPI.loc("textures/entity/bullet/" + type.getName() + "/" + color.getName() + ".png");
-			var r = switch (type) {
-				case BUTTERFLY -> new ButterflyProjectileType(loc, type.display(), 20);
-				case SPARK -> new RotatingProjectileType(loc, type.display(), 20);
-				case STAR -> new RotatingProjectileType(loc, type.display(), 40);
-				default -> new SimpleProjectileType(loc, type.display());//TODO
-			};
-			render = ProjTypeHolder.wrap(Wrappers.cast(r));
+			render = ProjTypeHolder.wrap(Wrappers.cast(buildRenderer()));
 		}
 		return render;
 	}
+
+	public double modifyFading(double selfFading) {
+		return selfFading;
+	}
+
 }

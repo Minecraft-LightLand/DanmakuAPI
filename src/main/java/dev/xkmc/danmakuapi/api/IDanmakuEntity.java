@@ -21,6 +21,19 @@ public interface IDanmakuEntity extends GrazingEntity {
 
 	float damage(Entity target);
 
+	/**
+	 * Client-side only flag synced by {@code DanmakuToClientPacket}:
+	 * true if this danmaku cannot hurt the local player.
+	 * Friendly danmaku renders as if shot by the player (faded).
+	 * Not saved, not part of spawn data.
+	 */
+	default void setClientFriendly(boolean friendly) {
+	}
+
+	default boolean isClientFriendly() {
+		return false;
+	}
+
 	default SimplifiedProjectile self() {
 		return (SimplifiedProjectile) this;
 	}
@@ -106,5 +119,22 @@ public interface IDanmakuEntity extends GrazingEntity {
 	}
 
 	TraceableEntity asTraceable();
+
+	/**
+	 * Server-side check used by {@code DanmakuManager} to tell each tracking player
+	 * whether a danmaku may hurt them. Mirrors {@link #hurtTarget} targeting logic.
+	 */
+	static boolean mayHurtTarget(SimplifiedProjectile proj, Entity target) {
+		Entity owner = proj.getOwner();
+		if (proj instanceof IDanmakuEntity dan) {
+			if (!dan.shouldHurt(owner, target)) return false;
+		} else if (!proj.canHitEntity(target)) {
+			return false;
+		}
+		if (owner instanceof Player player && target instanceof LivingEntity le) {
+			return GrazeHelper.shouldPlayerHurt(player, le);
+		}
+		return true;
+	}
 
 }

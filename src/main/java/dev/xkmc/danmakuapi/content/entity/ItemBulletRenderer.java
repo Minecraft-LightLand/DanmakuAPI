@@ -2,6 +2,7 @@ package dev.xkmc.danmakuapi.content.entity;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import dev.xkmc.danmakuapi.api.GrazeHelper;
+import dev.xkmc.danmakuapi.api.IDanmakuEntity;
 import dev.xkmc.danmakuapi.content.item.DanmakuItem;
 import dev.xkmc.danmakuapi.init.data.DanmakuConfig;
 import dev.xkmc.fastprojectileapi.entity.SimplifiedProjectile;
@@ -30,7 +31,8 @@ public class ItemBulletRenderer<T extends ItemBulletEntity> extends EntityRender
 	@Override
 	public double fading(SimplifiedProjectile e) {
 		double selfFading = DanmakuConfig.CLIENT.selfDanmakuFading.get();
-		if (entityRenderDispatcher.camera.getEntity() == e.getOwner()) {
+		if (entityRenderDispatcher.camera.getEntity() == e.getOwner() ||
+				e instanceof IDanmakuEntity dan && dan.isClientFriendly()) {
 			double dist = entityRenderDispatcher.camera.getPosition().distanceTo(e.position());
 			if (e instanceof ItemBulletEntity ibe && ibe.getItem().getItem() instanceof DanmakuItem item)
 				selfFading = item.modifyFading(selfFading);
@@ -48,7 +50,8 @@ public class ItemBulletRenderer<T extends ItemBulletEntity> extends EntityRender
 
 	public boolean shouldRender(T e, Frustum frustum, double camx, double camy, double camz) {
 		Entity cam = this.entityRenderDispatcher.camera.getEntity();
-		if (e.getOwner() != cam || e.tickCount >= 40) return true;
+		boolean self = e.getOwner() == cam || e.isClientFriendly();
+		if (!self || e.tickCount >= 40) return true;
 		double dh = e.getBbHeight() / 2;
 		double dist = cam.getEyePosition().distanceToSqr(e.position().add(0, dh, 0));
 		double dy = Math.abs(cam.getEyeY() - e.getY() - dh);

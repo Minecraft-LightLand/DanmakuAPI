@@ -33,6 +33,21 @@ public class DanmakuBulletEntity extends BaseProjectile implements IDanmakuEntit
 	@SerialField
 	public float damage = 0;
 
+	/**
+	 * Client-side only, see {@link IDanmakuEntity#setClientFriendly}.
+	 */
+	public boolean clientFriendly = false;
+
+	@Override
+	public void setClientFriendly(boolean friendly) {
+		this.clientFriendly = friendly;
+	}
+
+	@Override
+	public boolean isClientFriendly() {
+		return clientFriendly;
+	}
+
 	protected DanmakuBulletEntity(EntityType<? extends DanmakuBulletEntity> pEntityType, Level pLevel) {
 		super(pEntityType, pLevel);
 	}

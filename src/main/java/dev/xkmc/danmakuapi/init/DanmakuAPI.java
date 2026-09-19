@@ -3,6 +3,7 @@ package dev.xkmc.danmakuapi.init;
 import com.mojang.logging.LogUtils;
 import com.tterrag.registrate.providers.ProviderType;
 import dev.xkmc.danmakuapi.content.custom.screen.SpellSetToServer;
+import dev.xkmc.danmakuapi.content.entity.DanmakuFriendlyToClient;
 import dev.xkmc.danmakuapi.content.virtual.DanmakuToClientPacket;
 import dev.xkmc.danmakuapi.content.virtual.EraseDanmakuToClient;
 import dev.xkmc.danmakuapi.init.data.*;
@@ -32,8 +33,9 @@ public class DanmakuAPI {
 	public static final L2Registrate REGISTRATE = new L2Registrate(MODID);
 	public static final PacketHandler HANDLER = new PacketHandler(MODID, 1,
 			e -> e.create(SpellSetToServer.class, PacketHandler.NetDir.PLAY_TO_SERVER),
-			e -> e.create(DanmakuToClientPacket.class, PacketHandler.NetDir.PLAY_TO_CLIENT),
-			e -> e.create(EraseDanmakuToClient.class, PacketHandler.NetDir.PLAY_TO_CLIENT)
+		e -> e.create(DanmakuToClientPacket.class, PacketHandler.NetDir.PLAY_TO_CLIENT),
+		e -> e.create(EraseDanmakuToClient.class, PacketHandler.NetDir.PLAY_TO_CLIENT),
+		e -> e.create(DanmakuFriendlyToClient.class, PacketHandler.NetDir.PLAY_TO_CLIENT)
 	);
 
 	public static final SimpleEntry<CreativeModeTab> TAB =

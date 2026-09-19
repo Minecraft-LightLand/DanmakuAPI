@@ -36,6 +36,21 @@ public class DanmakuLaserEntity extends BaseLaser implements IEntityWithComplexS
 	@SerialField
 	public boolean setupLength;
 
+	/**
+	 * Client-side only, see {@link IDanmakuEntity#setClientFriendly}.
+	 */
+	public boolean clientFriendly = false;
+
+	@Override
+	public void setClientFriendly(boolean friendly) {
+		this.clientFriendly = friendly;
+	}
+
+	@Override
+	public boolean isClientFriendly() {
+		return clientFriendly;
+	}
+
 	public double earlyTerminate = -1;
 
 	protected DanmakuLaserEntity(EntityType<? extends DanmakuLaserEntity> pEntityType, Level pLevel) {

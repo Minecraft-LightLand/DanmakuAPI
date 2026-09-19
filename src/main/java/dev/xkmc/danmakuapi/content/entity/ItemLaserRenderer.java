@@ -3,6 +3,7 @@ package dev.xkmc.danmakuapi.content.entity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import dev.xkmc.danmakuapi.api.GrazeHelper;
+import dev.xkmc.danmakuapi.api.IDanmakuEntity;
 import dev.xkmc.danmakuapi.content.item.LaserItem;
 import dev.xkmc.danmakuapi.init.data.DanmakuConfig;
 import dev.xkmc.fastprojectileapi.entity.SimplifiedProjectile;
@@ -34,7 +35,8 @@ public class ItemLaserRenderer<T extends ItemLaserEntity> extends EntityRenderer
 
 	@Override
 	public double fading(SimplifiedProjectile e) {
-		if (entityRenderDispatcher.camera.getEntity() == e.getOwner()) {
+		if (entityRenderDispatcher.camera.getEntity() == e.getOwner() ||
+				e instanceof IDanmakuEntity dan && dan.isClientFriendly()) {
 			return DanmakuConfig.CLIENT.selfDanmakuFading.get();
 		}
 		return GrazeHelper.globalInvulTime > 0 ? DanmakuConfig.CLIENT.selfDanmakuFading.get() : 1;

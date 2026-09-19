@@ -5,6 +5,7 @@ import dev.xkmc.danmakuapi.api.DanmakuUseEvent;
 import dev.xkmc.danmakuapi.api.GrazeHelper;
 import dev.xkmc.danmakuapi.content.entity.ItemBulletEntity;
 import dev.xkmc.danmakuapi.content.render.ButterflyProjectileType;
+import dev.xkmc.danmakuapi.content.render.FlatProjectileType;
 import dev.xkmc.danmakuapi.content.render.RenderableDanmakuType;
 import dev.xkmc.danmakuapi.content.render.RotatingProjectileType;
 import dev.xkmc.danmakuapi.content.render.SimpleProjectileType;
@@ -94,6 +95,8 @@ public class DanmakuItem extends Item {
 			case BUTTERFLY -> new ButterflyProjectileType(loc, type.display(), 20);
 			case SPARK -> new RotatingProjectileType(loc, type.display(), 20);
 			case STAR -> new RotatingProjectileType(loc, type.display(), 40);
+			case CARD -> new FlatProjectileType(loc, type.display(), 60);
+			case DAGGER -> new FlatProjectileType(loc, type.display(), 0);
 			default -> new SimpleProjectileType(loc, type.display());
 		};
 	}

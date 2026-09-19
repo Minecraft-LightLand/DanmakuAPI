@@ -38,6 +38,8 @@ public class DanmakuItems {
 		BUTTERFLY(1, 4, DisplayType.TRANSPARENT),
 		SPARK(1, 4, DisplayType.SOLID),
 		STAR(2, 6, DisplayType.TRANSPARENT),
+		CARD(1, 4, DisplayType.SOLID),
+		DAGGER(1, 6, DisplayType.SOLID),
 		;
 
 		public final String name;

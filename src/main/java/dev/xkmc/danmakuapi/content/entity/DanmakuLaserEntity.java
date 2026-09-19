@@ -155,7 +155,7 @@ public class DanmakuLaserEntity extends BaseLaser implements IEntityWithComplexS
 
 	@Override
 	public boolean canHitEntity(Entity target) {
-		return super.canHitEntity(target) && shouldHurt(getOwner(), target);
+		return super.canHitEntity(target) && IDanmakuEntity.canHurt(getOwner(), target);
 	}
 
 	@Override

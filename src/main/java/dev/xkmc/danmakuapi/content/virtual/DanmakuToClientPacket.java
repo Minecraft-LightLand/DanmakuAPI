@@ -9,18 +9,16 @@ import io.netty.buffer.Unpooled;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.RegistryFriendlyByteBuf;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.network.connection.ConnectionType;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
 import java.util.List;
 
 @SerialClass
-public record DanmakuToClientPacket(Data[] entities, byte[] data) implements SerialPacketBase<DanmakuToClientPacket> {
+public record DanmakuToClientPacket(Data[] entities, byte[] data, boolean friendly) implements SerialPacketBase<DanmakuToClientPacket> {
 
 	@SerialClass
 	public static class Data {
@@ -34,8 +32,6 @@ public record DanmakuToClientPacket(Data[] entities, byte[] data) implements Ser
 		private float pitch, yaw;
 		@SerialField
 		private double velX, velY, velZ;
-		@SerialField
-		private boolean friendly;
 
 		public void restore(Entity e) {
 			e.syncPacketPositionCodec(posX, posY, posZ);
@@ -47,14 +43,16 @@ public record DanmakuToClientPacket(Data[] entities, byte[] data) implements Ser
 
 
 	public static DanmakuToClientPacket of(RegistryAccess access, List<SimplifiedProjectile> list) {
-		return of(access, list, null);
+		return of(access, list, false);
 	}
 
 	/**
-	 * {@code friendly} is true when the danmaku cannot hurt {@code target},
-	 * so it renders as if shot by the player on their client.
+	 * {@code friendly} applies to the whole batch: it is true when these danmaku
+	 * cannot hurt the receiving player, so they render as if shot by the player.
+	 * Targeting state is owner-level ({@link IDanmakuEntity#canHurt}), so callers
+	 * evaluate it once per player.
 	 */
-	public static DanmakuToClientPacket of(RegistryAccess access, List<SimplifiedProjectile> list, @Nullable ServerPlayer target) {
+	public static DanmakuToClientPacket of(RegistryAccess access, List<SimplifiedProjectile> list, boolean friendly) {
 		var data = new RegistryFriendlyByteBuf(Unpooled.buffer(), access, ConnectionType.NEOFORGE);
 		var entities = new Data[list.size()];
 		for (int i = 0; i < list.size(); i++) {
@@ -72,12 +70,11 @@ public record DanmakuToClientPacket(Data[] entities, byte[] data) implements Ser
 			dat.velX = vec3d.x;
 			dat.velY = vec3d.y;
 			dat.velZ = vec3d.z;
-			dat.friendly = target != null && !IDanmakuEntity.mayHurtTarget(e, target);
 			e.writeSpawnData(data);
 		}
 		var arr = Arrays.copyOfRange(data.array(), 0, data.writerIndex());
 		data.release();
-		return new DanmakuToClientPacket(entities, arr);
+		return new DanmakuToClientPacket(entities, arr, friendly);
 	}
 
 	@Override
@@ -92,7 +89,7 @@ public record DanmakuToClientPacket(Data[] entities, byte[] data) implements Ser
 			dat.restore(e);
 			sp.readSpawnData(buf);
 			if (sp instanceof IDanmakuEntity dan) {
-				dan.setClientFriendly(dat.friendly);
+				dan.setClientFriendly(friendly);
 			}
 			DanmakuClientHandler.add(sp);
 		}

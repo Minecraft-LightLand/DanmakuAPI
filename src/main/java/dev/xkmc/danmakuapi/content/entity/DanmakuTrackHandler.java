@@ -14,7 +14,7 @@ public class DanmakuTrackHandler {
 	public static void onStartTracking(PlayerEvent.StartTracking event) {
 		if (!(event.getTarget() instanceof IDanmakuEntity dan)) return;
 		if (!(event.getEntity() instanceof ServerPlayer player)) return;
-		boolean friendly = !IDanmakuEntity.mayHurtTarget(dan.self(), player);
+		boolean friendly = !IDanmakuEntity.canHurt(dan.self().getOwner(), player);
 		DanmakuAPI.HANDLER.toClientPlayer(new DanmakuFriendlyToClient(dan.self().getId(), friendly), player);
 	}
 

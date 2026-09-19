@@ -38,6 +38,29 @@ public interface IDanmakuEntity extends GrazingEntity {
 		return (SimplifiedProjectile) this;
 	}
 
+	/**
+	 * Owner-level targeting state: whether danmaku owned by {@code owner} may hurt
+	 * {@code target}. This depends only on owner and target — never on the individual
+	 * danmaku — so all danmaku from one owner share a single targeting state per target.
+	 * Collision ({@code canHitEntity}), sync, and rendering all derive from this.
+	 */
+	static boolean canHurt(@Nullable Entity owner, Entity target) {
+		if (owner == null) return false;
+		if (owner instanceof IYoukaiEntity youkai) {
+			return target instanceof LivingEntity le && youkai.shouldHurt(le);
+		}
+		if (owner instanceof Player player && target instanceof LivingEntity le) {
+			return GrazeHelper.shouldPlayerHurt(player, le);
+		}
+		return true;
+	}
+
+	/**
+	 * @deprecated Targeting is now owner-level (see {@link #canHurt}). This per-danmaku
+	 * hook is no longer consulted by collision, sync, or render paths, so overriding
+	 * it has no effect there. Kept functional for direct callers.
+	 */
+	@Deprecated(since = "3.0.5+4")
 	default boolean shouldHurt(@Nullable Entity owner, Entity e) {
 		if (owner == null) return false;
 		if (owner instanceof IYoukaiEntity youkai) {
@@ -121,9 +144,11 @@ public interface IDanmakuEntity extends GrazingEntity {
 	TraceableEntity asTraceable();
 
 	/**
-	 * Server-side check used by {@code DanmakuManager} to tell each tracking player
-	 * whether a danmaku may hurt them. Mirrors {@link #hurtTarget} targeting logic.
+	 * @deprecated Targeting is now owner-level (see {@link #canHurt}). Kept functional
+	 * with legacy per-projectile semantics for existing callers; engine paths (collision,
+	 * virtual sync, tracking sync) use {@code canHurt} with the owner instead.
 	 */
+	@Deprecated(since = "3.0.5+4")
 	static boolean mayHurtTarget(SimplifiedProjectile proj, Entity target) {
 		Entity owner = proj.getOwner();
 		if (proj instanceof IDanmakuEntity dan) {

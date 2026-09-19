@@ -23,7 +23,9 @@
 				"bubble": "大玉",
 				"butterfly": "蝶弹",
 				"spark": "小星弹",
-				"star": "大星弹"
+				"star": "大星弹",
+				"card": "札弹",
+				"dagger": "刀弹"
 			},
 			"color": {
 				"title": "弹幕颜色",

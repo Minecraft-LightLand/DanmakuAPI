@@ -13,13 +13,15 @@ import java.util.List;
 import java.util.function.Consumer;
 
 /**
- * Directional "flat" danmaku rendering: two crossed quads sharing the flight axis,
- * oriented by projectile yaw/pitch like {@link ButterflyProjectileType}, instead of
- * camera-facing billboards like {@link SimpleProjectileType}.
+ * Directional "flat" danmaku rendering: a single quad in the glide plane, i.e. the
+ * horizontal plane parallel to the flight axis, oriented by projectile yaw/pitch like
+ * {@link ButterflyProjectileType} instead of camera-facing billboards like
+ * {@link SimpleProjectileType}.
  * <p>
  * The texture top edge points along the flight direction, so elongated sprites
  * (talisman cards, thrown daggers) always point where they fly, Touhou-style.
- * An optional slow roll around the flight axis makes paper-like danmaku flutter.
+ * An optional slow roll around the flight axis banks the quad out of the glide
+ * plane and makes paper-like danmaku flutter.
  *
  * @param spin ticks per full roll around the flight axis; 0 disables rolling
  */
@@ -50,16 +52,12 @@ public record FlatProjectileType(ResourceLocation tex, DisplayType display, doub
 	public record Ins(Matrix4f m4, int color) {
 
 		public void tex(BulkDataWriter vc) {
-			// quad A in the ZX plane (horizontal fin)
+			// single quad in the ZX glide plane (horizontal when flying level);
+			// image top points along flight (+Z)
 			vertex(vc, m4, 0.5f, 0, 0.5f, 1, 0, color);
 			vertex(vc, m4, 0.5f, 0, -0.5f, 1, 1, color);
 			vertex(vc, m4, -0.5f, 0, -0.5f, 0, 1, color);
 			vertex(vc, m4, -0.5f, 0, 0.5f, 0, 0, color);
-			// quad B in the ZY plane (vertical fin), same UVs so both show the full sprite
-			vertex(vc, m4, 0, 0.5f, 0.5f, 1, 0, color);
-			vertex(vc, m4, 0, -0.5f, 0.5f, 1, 1, color);
-			vertex(vc, m4, 0, -0.5f, -0.5f, 0, 1, color);
-			vertex(vc, m4, 0, 0.5f, -0.5f, 0, 0, color);
 		}
 
 		private static void vertex(BulkDataWriter vc, Matrix4f m4, float x, float y, float z, float u, float v, int color) {

@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "danmaku_api:white_dagger_danmaku"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_white_dagger_danmaku": {
+      "conditions": {
+        "items": [
+          {
+            "items": "danmaku_api:white_dagger_danmaku"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_white_dagger_danmaku"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "danmaku_api:white_dagger_danmaku"
+    ]
+  }
+}

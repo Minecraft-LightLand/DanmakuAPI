@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "A": {
+      "tag": "danmaku_api:danmaku/dagger"
+    },
+    "B": {
+      "item": "minecraft:cyan_dye"
+    }
+  },
+  "pattern": [
+    "AAA",
+    "ABA",
+    "AAA"
+  ],
+  "result": {
+    "count": 8,
+    "id": "danmaku_api:cyan_dagger_danmaku"
+  }
+}

@@ -6,6 +6,8 @@
     "#danmaku_api:danmaku/bubble",
     "#danmaku_api:danmaku/butterfly",
     "#danmaku_api:danmaku/spark",
-    "#danmaku_api:danmaku/star"
+    "#danmaku_api:danmaku/star",
+    "#danmaku_api:danmaku/card",
+    "#danmaku_api:danmaku/dagger"
   ]
 }

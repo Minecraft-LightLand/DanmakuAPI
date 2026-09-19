@@ -1,0 +1,20 @@
+{
+  "values": [
+    "danmaku_api:white_card_danmaku",
+    "danmaku_api:orange_card_danmaku",
+    "danmaku_api:magenta_card_danmaku",
+    "danmaku_api:light_blue_card_danmaku",
+    "danmaku_api:yellow_card_danmaku",
+    "danmaku_api:lime_card_danmaku",
+    "danmaku_api:pink_card_danmaku",
+    "danmaku_api:gray_card_danmaku",
+    "danmaku_api:light_gray_card_danmaku",
+    "danmaku_api:cyan_card_danmaku",
+    "danmaku_api:purple_card_danmaku",
+    "danmaku_api:blue_card_danmaku",
+    "danmaku_api:brown_card_danmaku",
+    "danmaku_api:green_card_danmaku",
+    "danmaku_api:red_card_danmaku",
+    "danmaku_api:black_card_danmaku"
+  ]
+}

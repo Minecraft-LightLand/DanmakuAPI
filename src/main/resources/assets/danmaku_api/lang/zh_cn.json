@@ -145,6 +145,8 @@
   "danmaku_api.custom_spell.bullet.butterfly": "蝶弹",
   "danmaku_api.custom_spell.bullet.spark": "小星弹",
   "danmaku_api.custom_spell.bullet.star": "大星弹",
+  "danmaku_api.custom_spell.bullet.card": "札弹",
+  "danmaku_api.custom_spell.bullet.dagger": "刀弹",
   "danmaku_api.custom_spell.color.title": "弹幕颜色",
   "danmaku_api.custom_spell.color.black": "黑色",
   "danmaku_api.custom_spell.color.blue": "蓝色",

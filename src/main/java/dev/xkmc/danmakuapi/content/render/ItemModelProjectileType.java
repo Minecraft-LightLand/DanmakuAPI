@@ -6,16 +6,17 @@ import com.mojang.math.Axis;
 import dev.xkmc.fastprojectileapi.entity.SimplifiedProjectile;
 import dev.xkmc.fastprojectileapi.render.ProjectileRenderer;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.client.model.data.ModelData;
 import org.joml.Matrix4f;
+import org.joml.Vector4f;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,13 +40,16 @@ import java.util.function.Consumer;
  * rather than a texture location; the item texture and the danmaku entity texture are the same
  * image, so nothing changes about which art is shown.
  *
- * @param stack the danmaku item whose model is drawn
+ * @param item the danmaku item whose model is drawn
  * @param spin ticks per full roll around the flight axis; 0 disables rolling
  */
-public record ItemModelProjectileType(ItemStack stack, DisplayType display, double spin)
+public record ItemModelProjectileType(Item item, DisplayType display, double spin)
 		implements RenderableDanmakuType<ItemModelProjectileType, ItemModelProjectileType.Ins> {
 
 	private static final long SEED = 42L;
+
+	/** Ints per vertex in a baked quad, matching the block vertex format quads are baked in. */
+	private static final int STRIDE = 8;
 
 	/**
 	 * Item models are authored in a [0,1] cube, so this centres the cube on the projectile and
@@ -57,26 +61,14 @@ public record ItemModelProjectileType(ItemStack stack, DisplayType display, doub
 	 */
 	private static final Matrix4f FLAT = new Matrix4f().translate(-0.5F, -0.5F, -0.5F).rotateX((float) (Math.PI / 2));
 
-	private static final int[] FULLBRIGHT = {
-			LightTexture.pack(15, 15), LightTexture.pack(15, 15),
-			LightTexture.pack(15, 15), LightTexture.pack(15, 15)
-	};
-
-	/**
-	 * Danmaku are full bright, so the per-vertex brightness stays flat and the face shading is
-	 * folded into the tint instead. No overlay either, so no enchanted glint.
-	 */
-	private static final float[] UNLIT = { 1, 1, 1, 1 };
-
 	@Override
 	public void start(MultiBufferSource buffer, List<Ins> list) {
 		List<BakedQuad> quads = list.isEmpty() ? List.of() : getQuads();
 		if (quads.isEmpty()) return;
-		VertexConsumer vc = buffer.getBuffer(DanmakuRenderStates.itemModel(display));
+		var vc = buffer.getBuffer(DanmakuRenderStates.itemModel(display));
 		for (var ins : list) {
 			for (var quad : quads) {
-				float shade = shade(quad);
-				vc.putBulkData(ins.pose(), quad, UNLIT, shade, shade, shade, ins.alpha(), FULLBRIGHT, 0, true);
+				ins.tex(vc, quad);
 			}
 		}
 	}
@@ -89,7 +81,7 @@ public record ItemModelProjectileType(ItemStack stack, DisplayType display, doub
 			pose.mulPose(Axis.ZP.rotationDegrees((e.tickCount + pTick) * 360f / (float) spin));
 		}
 		pose.mulPose(FLAT);
-		holder.accept(new Ins(pose.last().copy(), (float) Mth.clamp(r.fading(e), 0, 1)));
+		holder.accept(new Ins(new Matrix4f(pose.last().pose()), (float) Mth.clamp(r.fading(e), 0, 1)));
 	}
 
 	/**
@@ -97,7 +89,9 @@ public record ItemModelProjectileType(ItemStack stack, DisplayType display, doub
 	 * cannot leave a stale model behind; this runs once per type per frame, not per danmaku.
 	 */
 	private List<BakedQuad> getQuads() {
-		BakedModel model = Minecraft.getInstance().getItemRenderer().getModel(stack, null, null, 0);
+		var renderer = Minecraft.getInstance().getItemRenderer();
+		// through ItemRenderer rather than the model shaper so item overrides still apply
+		BakedModel model = renderer.getModel(new ItemStack(item), null, null, 0);
 		if (model.isCustomRenderer()) return List.of();
 		RandomSource rand = RandomSource.create(SEED);
 		List<BakedQuad> quads = new ArrayList<>();
@@ -116,6 +110,49 @@ public record ItemModelProjectileType(ItemStack stack, DisplayType display, doub
 		return quad.getDirection().getAxis().isHorizontal() ? 0.6F : 1;
 	}
 
-	public record Ins(PoseStack.Pose pose, float alpha) {}
+	public record Ins(Matrix4f m4, float alpha) {
+
+		/**
+		 * Appends one baked quad, transformed into place.
+		 * <p>
+		 * This is {@link VertexConsumer#putBulkData} specialised to a
+		 * {@link net.minecraft.client.renderer.vertex.DefaultVertexFormat#POSITION_TEX_COLOR}
+		 * consumer, which does not use the lightmap, overlay or normal attributes it would
+		 * otherwise compute. Dropping those also drops the per-quad memory stack it unpacks
+		 * through, the normal transform, and the three vertex writes that land nowhere.
+		 * <p>
+		 * Positions go out through a fresh {@link Vector4f} per vertex rather than a shared
+		 * scratch, the way {@link BulkDataWriter} does it: measured against the real
+		 * {@link com.mojang.blaze3d.vertex.BufferBuilder} that is about twice as fast, because
+		 * a shared static has to be written to memory while a local one stays in registers.
+		 */
+		void tex(VertexConsumer vc, BakedQuad quad) {
+			int[] d = quad.getVertices();
+			float shade = shade(quad);
+			for (int i = 0; i < 4; i++) {
+				int o = i * STRIDE;
+				var pos = new Vector4f(Float.intBitsToFloat(d[o]), Float.intBitsToFloat(d[o + 1]),
+						Float.intBitsToFloat(d[o + 2]), 1).mul(m4);
+				vc.addVertex(pos.x(), pos.y(), pos.z())
+						.setUv(Float.intBitsToFloat(d[o + 4]), Float.intBitsToFloat(d[o + 5]))
+						.setColor(color(d[o + 3], shade));
+			}
+		}
+
+		/**
+		 * Baked color and shade as rgb, with fading on alpha.
+		 * <p>
+		 * Quads are baked with their color in little-endian abgr order, so red is the low byte;
+		 * the result is handed to {@link VertexConsumer#setColor} which wants plain argb.
+		 */
+		private int color(int baked, float shade) {
+			int a = (int) (alpha * (baked >>> 24));
+			int r = (int) ((baked & 0xFF) * shade);
+			int g = (int) ((baked >>> 8 & 0xFF) * shade);
+			int b = (int) ((baked >>> 16 & 0xFF) * shade);
+			return a << 24 | r << 16 | g << 8 | b;
+		}
+
+	}
 
 }

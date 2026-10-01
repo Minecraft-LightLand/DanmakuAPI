@@ -97,7 +97,7 @@ public class DanmakuItem extends Item {
 			case SPARK -> new RotatingProjectileType(loc, type.display(), 20);
 			case STAR -> new RotatingProjectileType(loc, type.display(), 40);
 			case CARD -> new FlatProjectileType(loc, type.display(), 60);
-			case DAGGER -> new ItemModelProjectileType(new ItemStack(this), type.display(), 0);
+			case DAGGER -> new ItemModelProjectileType(this, type.display(), 0);
 			default -> new SimpleProjectileType(loc, type.display());
 		};
 	}

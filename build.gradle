@@ -7,7 +7,7 @@ plugins {
 }
 
 version = mod_version
-group = 'dev.kxmc'
+group = 'dev.xkmc'
 
 repositories {
     mavenLocal()
@@ -132,11 +132,6 @@ repositories {
         // Location of the maven that hosts JEI files (and TiC)
         name 'Progwml6 maven'
         url 'https://dvs1.progwml6.com/files/maven'
-    }
-
-    maven {
-        name = "OctoStudios"
-        url = uri("https://maven.octo-studios.com/releases")
     }
     mavenLocal();
 }

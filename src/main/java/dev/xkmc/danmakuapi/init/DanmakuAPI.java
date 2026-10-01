@@ -38,10 +38,6 @@ public class DanmakuAPI {
 		e -> e.create(DanmakuFriendlyToClient.class, PacketHandler.NetDir.PLAY_TO_CLIENT)
 	);
 
-	public static final SimpleEntry<CreativeModeTab> TAB =
-			REGISTRATE.buildModCreativeTab("danmaku", "Spellcards & Danmaku",
-					e -> e.icon(() -> DanmakuItems.Bullet.CIRCLE.get(DyeColor.RED).asStack()));
-
 	public DanmakuAPI() {
 		DanmakuItems.register();
 		DanmakuEntities.register();

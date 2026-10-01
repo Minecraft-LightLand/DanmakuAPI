@@ -7,9 +7,11 @@ import dev.xkmc.fastprojectileapi.render.ProjectileRenderer;
 import net.minecraft.Util;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.resources.ResourceLocation;
 
 import java.util.function.BiFunction;
+import java.util.function.Function;
 
 public abstract class DanmakuRenderStates extends RenderType {
 
@@ -41,6 +43,8 @@ public abstract class DanmakuRenderStates extends RenderType {
 			Util.memoize((rl, type) -> create("danmaku_" + type.getName(), rl, false, type));
 	private static final BiFunction<ResourceLocation, DisplayType, RenderType> LASER =
 			Util.memoize((rl, type) -> create("laser_" + type.getName(), rl, true, type));
+	private static final Function<DisplayType, RenderType> ITEM_MODEL =
+			Util.memoize(type -> create("item_model_" + type.getName(), TextureAtlas.LOCATION_BLOCKS, false, type));
 
 	public static RenderType danmaku(ResourceLocation rl, DisplayType type) {
 		if (type == DisplayType.SOLID) type = DisplayType.TRANSPARENT;
@@ -49,6 +53,21 @@ public abstract class DanmakuRenderStates extends RenderType {
 
 	public static RenderType laser(ResourceLocation rl, DisplayType type) {
 		return LASER.apply(rl, type);
+	}
+
+	/**
+	 * Render state for danmaku drawn as a baked item model. Such a model samples the item
+	 * atlas, which in this version is the block atlas, so that is the bound texture.
+	 * <p>
+	 * It keeps {@link com.mojang.blaze3d.vertex.DefaultVertexFormat#POSITION_TEX_COLOR} rather
+	 * than the {@link com.mojang.blaze3d.vertex.DefaultVertexFormat#NEW_ENTITY} vanilla item
+	 * rendering uses: danmaku are always full bright and are shaded per quad into the vertex
+	 * color, so the lightmap, overlay (no glint) and normal attributes can all be dropped,
+	 * cutting a vertex from 40 to 24 bytes.
+	 */
+	public static RenderType itemModel(DisplayType type) {
+		if (type == DisplayType.SOLID) type = DisplayType.TRANSPARENT;
+		return ITEM_MODEL.apply(type);
 	}
 
 	public static int fading(DisplayType display, int col, ProjectileRenderer<?> r, SimplifiedProjectile e) {

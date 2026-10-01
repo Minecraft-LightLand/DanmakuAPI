@@ -3,7 +3,7 @@ plugins {
     id 'eclipse'
     id 'idea'
     id 'maven-publish'
-    id 'net.neoforged.gradle.userdev' version '7.0.165'
+    id 'net.neoforged.moddev' version '2.0.80'
 }
 
 version = mod_version
@@ -19,26 +19,50 @@ base {
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 
-minecraft.accessTransformers.file rootProject.file('src/main/resources/META-INF/accesstransformer.cfg')
+sourceSets {
+    client {}
+    server {}
+    data {}
+    common {}
+}
 
-runs {
-    configureEach {
-        systemProperty 'forge.logging.markers', 'REGISTRIES'
-        systemProperty 'forge.logging.console.level', 'debug'
-        modSource project.sourceSets.main
+neoForge {
+    // We currently only support NeoForge versions later than 21.0.x
+    // See https://projects.neoforged.net/neoforged/neoforge for the latest updates
+    version = "${neo_version}"
+
+    parchment {
+        mappingsVersion = project.parchment_mappings_version
+        minecraftVersion = project.parchment_minecraft_version
     }
-    client {
-        systemProperty 'forge.enabledGameTestNamespaces', project.mod_id
+
+    // Validate AT files and raise errors when they have invalid targets
+    // This option is false by default, but turning it on is recommended
+    //validateAccessTransformers = true
+    accessTransformers.from "./src/main/resources/META-INF/accesstransformer.cfg"
+
+    runs {
+        client {
+            client()
+        }
+        data {
+            data()
+
+            programArguments.addAll '--mod', project.mod_id, '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
+
+        }
+        server {
+            server()
+        }
+        gameTestServer {
+            type = "gameTestServer"
+        }
     }
-    server {
-        systemProperty 'forge.enabledGameTestNamespaces', project.mod_id
-        programArgument '--nogui'
-    }
-    gameTestServer {
-        systemProperty 'forge.enabledGameTestNamespaces', project.mod_id
-    }
-    data {
-        programArguments.addAll '--mod', project.mod_id, '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
+
+    mods {
+        "${mod_id}" {
+            sourceSet sourceSets.main
+        }
     }
 }
 
@@ -46,10 +70,6 @@ sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 java {
     withSourcesJar()
-}
-
-dependencies {
-    implementation "net.neoforged:neoforge:${neo_version}"
 }
 
 tasks.withType(ProcessResources).configureEach {
@@ -154,4 +174,6 @@ dependencies {
     runtimeOnly "dev.xkmc:l2itemselector:${l2itemselector_ver}"
     runtimeOnly "dev.xkmc:l2modularblocks:${l2modularblocks_ver}"
 
+    testImplementation "com.mojang:datafixerupper:8.0.16"
+    testImplementation "com.google.guava:guava:32.1.2-jre"
 }

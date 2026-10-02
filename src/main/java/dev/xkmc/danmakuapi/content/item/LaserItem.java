@@ -11,6 +11,7 @@ import dev.xkmc.danmakuapi.init.DanmakuAPI;
 import dev.xkmc.danmakuapi.init.data.DanmakuConfig;
 import dev.xkmc.danmakuapi.init.data.DanmakuLang;
 import dev.xkmc.danmakuapi.init.registrate.DanmakuEntities;
+import dev.xkmc.danmakuapi.init.registrate.DanmakuSounds;
 import dev.xkmc.fastprojectileapi.render.ProjTypeHolder;
 import dev.xkmc.fastprojectileapi.render.RenderableProjectileType;
 import dev.xkmc.l2serial.util.Wrappers;
@@ -155,8 +156,8 @@ public class LaserItem extends Item {
 
 	/** The sound this item makes when fired. */
 	protected void playThrowSound(Level level, Player player) {
-		level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.SNOWBALL_THROW, SoundSource.PLAYERS,
-				0.5F, 0.4F / (level.getRandom().nextFloat() * 0.4F + 0.8F));
+		level.playSound(null, player.getX(), player.getY(), player.getZ(), DanmakuSounds.LASER.get(), SoundSource.PLAYERS,
+				0.5F, 1.0F);
 	}
 
 	/**

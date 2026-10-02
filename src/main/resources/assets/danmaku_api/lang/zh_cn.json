@@ -224,5 +224,13 @@
   "danmaku_api.configuration.homingSpellDanmakuPerItemCost": "追踪弹符卡：弹幕消耗比",
   "danmaku_api.configuration.homingSpellDanmakuPerItemCost.tooltip": "每个物品消耗支持的弹幕量。范围: 1 ~ 1024",
   "danmaku_api.configuration.ringSpellDanmakuPerItemCost": "开花弹符卡：弹幕消耗比",
-  "danmaku_api.configuration.ringSpellDanmakuPerItemCost.tooltip": "每个物品消耗支持的弹幕量。范围: 1 ~ 1024"
+  "danmaku_api.configuration.ringSpellDanmakuPerItemCost.tooltip": "每个物品消耗支持的弹幕量。范围: 1 ~ 1024",
+  "danmaku_api.subtitle.shoot": "Danmaku",
+  "danmaku_api.subtitle.shoot_2": "Danmaku",
+  "danmaku_api.subtitle.shoot_3": "Danmaku",
+  "danmaku_api.subtitle.mini_shoot": "Danmaku",
+  "danmaku_api.subtitle.graze": "Grazing",
+  "danmaku_api.subtitle.slash": "Slash",
+  "danmaku_api.subtitle.laser": "Laser",
+  "danmaku_api.subtitle.laser_2": "Laser"
 }

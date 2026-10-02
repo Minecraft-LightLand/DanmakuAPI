@@ -1,0 +1,74 @@
+{
+  "graze": {
+	"sounds": [
+	  {
+		"type": "file",
+		"name": "danmaku_api:graze"
+	  }
+	],
+	"subtitle": "danmaku_api.subtitle.graze"
+  },
+   "laser": {
+	"sounds": [
+	  {
+		"type": "file",
+		"name": "danmaku_api:laser"
+	  }
+	],
+	"subtitle": "danmaku_api.subtitle.laser"
+  },
+  "laser_2": {
+	"sounds": [
+	  {
+		"type": "file",
+		"name": "danmaku_api:laser_2"
+	  }
+	],
+	"subtitle": "danmaku_api.subtitle.laser_2"
+  },
+  "mini_shoot": {
+	"sounds": [
+	  {
+		"type": "file",
+		"name": "danmaku_api:mini_shoot"
+	  }
+	],
+	"subtitle": "danmaku_api.subtitle.mini_shoot"
+  },
+    "slash": {
+	"sounds": [
+	  {
+		"type": "file",
+		"name": "danmaku_api:slash"
+	  }
+	],
+	"subtitle": "danmaku_api.subtitle.slash"
+  },
+    "shoot": {
+	"sounds": [
+	  {
+		"type": "file",
+		"name": "danmaku_api:shoot"
+	  }
+	],
+	"subtitle": "danmaku_api.subtitle.shoot"
+  },
+  "shoot_2": {
+	"sounds": [
+	  {
+		"type": "file",
+		"name": "danmaku_api:shoot_2"
+	  }
+	],
+	"subtitle": "danmaku_api.subtitle.shoot_2"
+  },
+  "shoot_3": {
+	"sounds": [
+	  {
+		"type": "file",
+		"name": "danmaku_api:shoot_3"
+	  }
+	],
+	"subtitle": "danmaku_api.subtitle.shoot_3"
+  }
+}

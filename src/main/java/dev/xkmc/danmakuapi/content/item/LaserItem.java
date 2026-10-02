@@ -11,6 +11,7 @@ import dev.xkmc.danmakuapi.init.DanmakuAPI;
 import dev.xkmc.danmakuapi.init.data.DanmakuConfig;
 import dev.xkmc.danmakuapi.init.data.DanmakuLang;
 import dev.xkmc.danmakuapi.init.registrate.DanmakuEntities;
+import dev.xkmc.danmakuapi.init.registrate.DanmakuSounds;
 import dev.xkmc.fastprojectileapi.render.ProjTypeHolder;
 import dev.xkmc.fastprojectileapi.render.RenderableProjectileType;
 import net.minecraft.network.chat.Component;
@@ -57,8 +58,8 @@ public class LaserItem extends Item {
 		if (event.isCanceled()) {
 			return InteractionResultHolder.fail(stack);
 		}
-		level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.SNOWBALL_THROW, SoundSource.PLAYERS,
-				0.5F, 0.4F / (level.getRandom().nextFloat() * 0.4F + 0.8F));
+		level.playSound(null, player.getX(), player.getY(), player.getZ(), DanmakuSounds.LASER.get(), SoundSource.PLAYERS,
+				0.5F, 1.0F);
 		if (!level.isClientSide) {
 			ItemLaserEntity danmaku = new ItemLaserEntity(DanmakuEntities.ITEM_LASER.get(), player, level);
 			danmaku.setItem(stack);

@@ -288,5 +288,13 @@
   "item.danmaku_api.yellow_pencil": "Yellow Pencil",
   "item.danmaku_api.yellow_spark_danmaku": "Yellow Spark Danmaku",
   "item.danmaku_api.yellow_star_danmaku": "Yellow Star Danmaku",
+  "danmaku_api.subtitle.shoot": "Danmaku",
+  "danmaku_api.subtitle.shoot_2": "Danmaku",
+  "danmaku_api.subtitle.shoot_3": "Danmaku",
+  "danmaku_api.subtitle.mini_shoot": "Danmaku",
+  "danmaku_api.subtitle.graze": "Grazing",
+  "danmaku_api.subtitle.slash": "Slash",
+  "danmaku_api.subtitle.laser": "Laser",
+  "danmaku_api.subtitle.laser_2": "Laser",
   "itemGroup.danmaku_api.danmaku": "Spellcards & Danmaku"
 }

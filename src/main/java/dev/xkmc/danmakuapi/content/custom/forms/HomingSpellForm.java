@@ -7,8 +7,10 @@ import dev.xkmc.danmakuapi.content.spell.mover.CompositeMover;
 import dev.xkmc.danmakuapi.content.spell.mover.RectMover;
 import dev.xkmc.danmakuapi.content.spell.spellcard.CardHolder;
 import dev.xkmc.danmakuapi.content.spell.spellcard.Ticker;
+import dev.xkmc.danmakuapi.init.registrate.DanmakuSounds;
 import dev.xkmc.l2serial.serialization.marker.SerialClass;
 import dev.xkmc.l2serial.serialization.marker.SerialField;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.phys.Vec3;
 
@@ -35,6 +37,8 @@ public class HomingSpellForm extends ISpellForm<HomingSpellFormData> {
 		int n = form.branches();
 		var rand = holder.random();
 		while (tick >= step * form.delay() && step < form.steps()) {
+				player.level().playSound(null, player.getX(), player.getY(), player.getZ(), DanmakuSounds.SHOOT_2.get(), SoundSource.PLAYERS,
+				0.5F, 1.0F);
 			for (int i = 0; i < n; i++) {
 				double ax = (i - (n - 1) * 0.5) * form.branchAngle() +
 						(step - (form.steps() - 1) * 0.5) * form.stepAngle();

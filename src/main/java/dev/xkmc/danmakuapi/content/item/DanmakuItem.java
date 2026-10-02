@@ -14,6 +14,7 @@ import dev.xkmc.danmakuapi.init.DanmakuAPI;
 import dev.xkmc.danmakuapi.init.data.DanmakuConfig;
 import dev.xkmc.danmakuapi.init.data.DanmakuLang;
 import dev.xkmc.danmakuapi.init.registrate.DanmakuEntities;
+import dev.xkmc.danmakuapi.init.registrate.DanmakuSounds;
 import dev.xkmc.fastprojectileapi.render.ProjTypeHolder;
 import dev.xkmc.fastprojectileapi.render.RenderableProjectileType;
 import dev.xkmc.l2library.content.raytrace.RayTraceUtil;
@@ -61,8 +62,8 @@ public class DanmakuItem extends Item {
 		if (event.isCanceled()) {
 			return InteractionResultHolder.fail(stack);
 		}
-		level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.SNOWBALL_THROW, SoundSource.PLAYERS,
-				0.5F, 0.4F / (level.getRandom().nextFloat() * 0.4F + 0.8F));
+		level.playSound(null, player.getX(), player.getY(), player.getZ(), DanmakuSounds.SHOOT.get(), SoundSource.PLAYERS,
+				0.5F, 1.0F);
 		if (!level.isClientSide) {
 			ItemBulletEntity danmaku = new ItemBulletEntity(DanmakuEntities.ITEM_DANMAKU.get(), player, level);
 			danmaku.setItem(stack);

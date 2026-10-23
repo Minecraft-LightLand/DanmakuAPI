@@ -1,0 +1,1066 @@
+{
+  "sources": [
+    {
+      "type": "minecraft:unstitch",
+      "resource": "danmaku_api:bullet_sheet/ball",
+      "regions": [
+        {
+          "sprite": "danmaku_api:item/bullet/ball/white",
+          "x": 0,
+          "y": 0,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/ball/orange",
+          "x": 16,
+          "y": 0,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/ball/magenta",
+          "x": 32,
+          "y": 0,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/ball/light_blue",
+          "x": 48,
+          "y": 0,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/ball/yellow",
+          "x": 0,
+          "y": 16,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/ball/lime",
+          "x": 16,
+          "y": 16,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/ball/pink",
+          "x": 32,
+          "y": 16,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/ball/gray",
+          "x": 48,
+          "y": 16,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/ball/light_gray",
+          "x": 0,
+          "y": 32,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/ball/cyan",
+          "x": 16,
+          "y": 32,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/ball/purple",
+          "x": 32,
+          "y": 32,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/ball/blue",
+          "x": 48,
+          "y": 32,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/ball/brown",
+          "x": 0,
+          "y": 48,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/ball/green",
+          "x": 16,
+          "y": 48,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/ball/red",
+          "x": 32,
+          "y": 48,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/ball/black",
+          "x": 48,
+          "y": 48,
+          "width": 16,
+          "height": 16
+        }
+      ]
+    },
+    {
+      "type": "minecraft:unstitch",
+      "resource": "danmaku_api:bullet_sheet/bubble",
+      "regions": [
+        {
+          "sprite": "danmaku_api:item/bullet/bubble/white",
+          "x": 0,
+          "y": 0,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/bubble/orange",
+          "x": 16,
+          "y": 0,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/bubble/magenta",
+          "x": 32,
+          "y": 0,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/bubble/light_blue",
+          "x": 48,
+          "y": 0,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/bubble/yellow",
+          "x": 0,
+          "y": 16,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/bubble/lime",
+          "x": 16,
+          "y": 16,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/bubble/pink",
+          "x": 32,
+          "y": 16,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/bubble/gray",
+          "x": 48,
+          "y": 16,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/bubble/light_gray",
+          "x": 0,
+          "y": 32,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/bubble/cyan",
+          "x": 16,
+          "y": 32,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/bubble/purple",
+          "x": 32,
+          "y": 32,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/bubble/blue",
+          "x": 48,
+          "y": 32,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/bubble/brown",
+          "x": 0,
+          "y": 48,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/bubble/green",
+          "x": 16,
+          "y": 48,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/bubble/red",
+          "x": 32,
+          "y": 48,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/bubble/black",
+          "x": 48,
+          "y": 48,
+          "width": 16,
+          "height": 16
+        }
+      ]
+    },
+    {
+      "type": "minecraft:unstitch",
+      "resource": "danmaku_api:bullet_sheet/butterfly",
+      "regions": [
+        {
+          "sprite": "danmaku_api:item/bullet/butterfly/white",
+          "x": 0,
+          "y": 0,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/butterfly/orange",
+          "x": 16,
+          "y": 0,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/butterfly/magenta",
+          "x": 32,
+          "y": 0,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/butterfly/light_blue",
+          "x": 48,
+          "y": 0,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/butterfly/yellow",
+          "x": 0,
+          "y": 16,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/butterfly/lime",
+          "x": 16,
+          "y": 16,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/butterfly/pink",
+          "x": 32,
+          "y": 16,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/butterfly/gray",
+          "x": 48,
+          "y": 16,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/butterfly/light_gray",
+          "x": 0,
+          "y": 32,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/butterfly/cyan",
+          "x": 16,
+          "y": 32,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/butterfly/purple",
+          "x": 32,
+          "y": 32,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/butterfly/blue",
+          "x": 48,
+          "y": 32,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/butterfly/brown",
+          "x": 0,
+          "y": 48,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/butterfly/green",
+          "x": 16,
+          "y": 48,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/butterfly/red",
+          "x": 32,
+          "y": 48,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/butterfly/black",
+          "x": 48,
+          "y": 48,
+          "width": 16,
+          "height": 16
+        }
+      ]
+    },
+    {
+      "type": "minecraft:unstitch",
+      "resource": "danmaku_api:bullet_sheet/card",
+      "regions": [
+        {
+          "sprite": "danmaku_api:item/bullet/card/white",
+          "x": 0,
+          "y": 0,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/card/orange",
+          "x": 16,
+          "y": 0,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/card/magenta",
+          "x": 32,
+          "y": 0,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/card/light_blue",
+          "x": 48,
+          "y": 0,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/card/yellow",
+          "x": 0,
+          "y": 16,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/card/lime",
+          "x": 16,
+          "y": 16,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/card/pink",
+          "x": 32,
+          "y": 16,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/card/gray",
+          "x": 48,
+          "y": 16,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/card/light_gray",
+          "x": 0,
+          "y": 32,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/card/cyan",
+          "x": 16,
+          "y": 32,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/card/purple",
+          "x": 32,
+          "y": 32,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/card/blue",
+          "x": 48,
+          "y": 32,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/card/brown",
+          "x": 0,
+          "y": 48,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/card/green",
+          "x": 16,
+          "y": 48,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/card/red",
+          "x": 32,
+          "y": 48,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/card/black",
+          "x": 48,
+          "y": 48,
+          "width": 16,
+          "height": 16
+        }
+      ]
+    },
+    {
+      "type": "minecraft:unstitch",
+      "resource": "danmaku_api:bullet_sheet/circle",
+      "regions": [
+        {
+          "sprite": "danmaku_api:item/bullet/circle/white",
+          "x": 0,
+          "y": 0,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/circle/orange",
+          "x": 16,
+          "y": 0,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/circle/magenta",
+          "x": 32,
+          "y": 0,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/circle/light_blue",
+          "x": 48,
+          "y": 0,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/circle/yellow",
+          "x": 0,
+          "y": 16,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/circle/lime",
+          "x": 16,
+          "y": 16,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/circle/pink",
+          "x": 32,
+          "y": 16,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/circle/gray",
+          "x": 48,
+          "y": 16,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/circle/light_gray",
+          "x": 0,
+          "y": 32,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/circle/cyan",
+          "x": 16,
+          "y": 32,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/circle/purple",
+          "x": 32,
+          "y": 32,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/circle/blue",
+          "x": 48,
+          "y": 32,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/circle/brown",
+          "x": 0,
+          "y": 48,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/circle/green",
+          "x": 16,
+          "y": 48,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/circle/red",
+          "x": 32,
+          "y": 48,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/circle/black",
+          "x": 48,
+          "y": 48,
+          "width": 16,
+          "height": 16
+        }
+      ]
+    },
+    {
+      "type": "minecraft:unstitch",
+      "resource": "danmaku_api:bullet_sheet/dagger",
+      "regions": [
+        {
+          "sprite": "danmaku_api:item/bullet/dagger/white",
+          "x": 0,
+          "y": 0,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/dagger/orange",
+          "x": 16,
+          "y": 0,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/dagger/magenta",
+          "x": 32,
+          "y": 0,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/dagger/light_blue",
+          "x": 48,
+          "y": 0,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/dagger/yellow",
+          "x": 0,
+          "y": 16,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/dagger/lime",
+          "x": 16,
+          "y": 16,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/dagger/pink",
+          "x": 32,
+          "y": 16,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/dagger/gray",
+          "x": 48,
+          "y": 16,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/dagger/light_gray",
+          "x": 0,
+          "y": 32,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/dagger/cyan",
+          "x": 16,
+          "y": 32,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/dagger/purple",
+          "x": 32,
+          "y": 32,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/dagger/blue",
+          "x": 48,
+          "y": 32,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/dagger/brown",
+          "x": 0,
+          "y": 48,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/dagger/green",
+          "x": 16,
+          "y": 48,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/dagger/red",
+          "x": 32,
+          "y": 48,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/dagger/black",
+          "x": 48,
+          "y": 48,
+          "width": 16,
+          "height": 16
+        }
+      ]
+    },
+    {
+      "type": "minecraft:unstitch",
+      "resource": "danmaku_api:bullet_sheet/mentos",
+      "regions": [
+        {
+          "sprite": "danmaku_api:item/bullet/mentos/white",
+          "x": 0,
+          "y": 0,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/mentos/orange",
+          "x": 16,
+          "y": 0,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/mentos/magenta",
+          "x": 32,
+          "y": 0,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/mentos/light_blue",
+          "x": 48,
+          "y": 0,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/mentos/yellow",
+          "x": 0,
+          "y": 16,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/mentos/lime",
+          "x": 16,
+          "y": 16,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/mentos/pink",
+          "x": 32,
+          "y": 16,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/mentos/gray",
+          "x": 48,
+          "y": 16,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/mentos/light_gray",
+          "x": 0,
+          "y": 32,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/mentos/cyan",
+          "x": 16,
+          "y": 32,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/mentos/purple",
+          "x": 32,
+          "y": 32,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/mentos/blue",
+          "x": 48,
+          "y": 32,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/mentos/brown",
+          "x": 0,
+          "y": 48,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/mentos/green",
+          "x": 16,
+          "y": 48,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/mentos/red",
+          "x": 32,
+          "y": 48,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/mentos/black",
+          "x": 48,
+          "y": 48,
+          "width": 16,
+          "height": 16
+        }
+      ]
+    },
+    {
+      "type": "minecraft:unstitch",
+      "resource": "danmaku_api:bullet_sheet/spark",
+      "regions": [
+        {
+          "sprite": "danmaku_api:item/bullet/spark/white",
+          "x": 0,
+          "y": 0,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/spark/orange",
+          "x": 16,
+          "y": 0,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/spark/magenta",
+          "x": 32,
+          "y": 0,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/spark/light_blue",
+          "x": 48,
+          "y": 0,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/spark/yellow",
+          "x": 0,
+          "y": 16,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/spark/lime",
+          "x": 16,
+          "y": 16,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/spark/pink",
+          "x": 32,
+          "y": 16,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/spark/gray",
+          "x": 48,
+          "y": 16,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/spark/light_gray",
+          "x": 0,
+          "y": 32,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/spark/cyan",
+          "x": 16,
+          "y": 32,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/spark/purple",
+          "x": 32,
+          "y": 32,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/spark/blue",
+          "x": 48,
+          "y": 32,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/spark/brown",
+          "x": 0,
+          "y": 48,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/spark/green",
+          "x": 16,
+          "y": 48,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/spark/red",
+          "x": 32,
+          "y": 48,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/spark/black",
+          "x": 48,
+          "y": 48,
+          "width": 16,
+          "height": 16
+        }
+      ]
+    },
+    {
+      "type": "minecraft:unstitch",
+      "resource": "danmaku_api:bullet_sheet/star",
+      "regions": [
+        {
+          "sprite": "danmaku_api:item/bullet/star/white",
+          "x": 0,
+          "y": 0,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/star/orange",
+          "x": 16,
+          "y": 0,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/star/magenta",
+          "x": 32,
+          "y": 0,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/star/light_blue",
+          "x": 48,
+          "y": 0,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/star/yellow",
+          "x": 0,
+          "y": 16,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/star/lime",
+          "x": 16,
+          "y": 16,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/star/pink",
+          "x": 32,
+          "y": 16,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/star/gray",
+          "x": 48,
+          "y": 16,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/star/light_gray",
+          "x": 0,
+          "y": 32,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/star/cyan",
+          "x": 16,
+          "y": 32,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/star/purple",
+          "x": 32,
+          "y": 32,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/star/blue",
+          "x": 48,
+          "y": 32,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/star/brown",
+          "x": 0,
+          "y": 48,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/star/green",
+          "x": 16,
+          "y": 48,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/star/red",
+          "x": 32,
+          "y": 48,
+          "width": 16,
+          "height": 16
+        },
+        {
+          "sprite": "danmaku_api:item/bullet/star/black",
+          "x": 48,
+          "y": 48,
+          "width": 16,
+          "height": 16
+        }
+      ]
+    }
+  ]
+}

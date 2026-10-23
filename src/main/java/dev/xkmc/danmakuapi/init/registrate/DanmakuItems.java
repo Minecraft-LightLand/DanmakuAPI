@@ -22,6 +22,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
@@ -145,6 +146,7 @@ public class DanmakuItems {
 						.item(e.getName() + "_" + t.name + "_danmaku", p -> new DanmakuItem(p.rarity(Rarity.RARE), t, e, t.size))
 						.model((ctx, pvd) -> pvd.generated(ctx, pvd.modLoc("item/bullet/" + t.name + "/" + e.getName())))
 						.tag(t.tag)
+						.removeTab(CreativeModeTabs.SEARCH)
 						.register();
 				DANMAKU[t.ordinal()][e.ordinal()] = ent;
 			}
@@ -160,6 +162,7 @@ public class DanmakuItems {
 								pvd.modLoc("item/laser/" + t.name + "_overlay")))
 						.color(() -> () -> (stack, i) -> ((LaserItem) stack.getItem()).getDanmakuColor(stack, i))
 						.tag(t.tag)
+						.removeTab(CreativeModeTabs.SEARCH)
 						.register();
 				LASER[t.ordinal()][e.ordinal()] = ent;
 			}

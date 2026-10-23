@@ -106,6 +106,9 @@ tasks.withType(JavaCompile).configureEach {
 }
 
 jar {
+    // Registrate's datagen cache is a build artifact living under src/generated/resources.
+    // It is needed for incremental datagen but must not ship in the mod jar.
+    exclude '.cache/**'
     manifest {
         attributes([
                 "Specification-Title"     : "${mod_id}",

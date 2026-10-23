@@ -47,7 +47,6 @@ public class DanmakuAPI {
 	@SubscribeEvent(priority = EventPriority.HIGH)
 	public static void gatherData(GatherDataEvent event) {
 		REGISTRATE.addDataGenerator(ProviderType.LANG, DanmakuLang::genLang);
-		REGISTRATE.addDataGenerator(ProviderType.RECIPE, DanmakuRecipeGen::genRecipes);
 		REGISTRATE.addDataGenerator(ProviderType.ITEM_TAGS, DanmakuTagGen::genItemTag);
 		new DanmakuDamageTypes(REGISTRATE).generate();
 	}

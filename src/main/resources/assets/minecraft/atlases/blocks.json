@@ -3,6 +3,8 @@
     {
       "type": "minecraft:unstitch",
       "resource": "danmaku_api:bullet_sheet/ball",
+      "divisor_x": 64,
+      "divisor_y": 64,
       "regions": [
         {
           "sprite": "danmaku_api:item/bullet/ball/white",
@@ -121,6 +123,8 @@
     {
       "type": "minecraft:unstitch",
       "resource": "danmaku_api:bullet_sheet/bubble",
+      "divisor_x": 64,
+      "divisor_y": 64,
       "regions": [
         {
           "sprite": "danmaku_api:item/bullet/bubble/white",
@@ -239,6 +243,8 @@
     {
       "type": "minecraft:unstitch",
       "resource": "danmaku_api:bullet_sheet/butterfly",
+      "divisor_x": 64,
+      "divisor_y": 64,
       "regions": [
         {
           "sprite": "danmaku_api:item/bullet/butterfly/white",
@@ -357,6 +363,8 @@
     {
       "type": "minecraft:unstitch",
       "resource": "danmaku_api:bullet_sheet/card",
+      "divisor_x": 64,
+      "divisor_y": 64,
       "regions": [
         {
           "sprite": "danmaku_api:item/bullet/card/white",
@@ -475,6 +483,8 @@
     {
       "type": "minecraft:unstitch",
       "resource": "danmaku_api:bullet_sheet/circle",
+      "divisor_x": 64,
+      "divisor_y": 64,
       "regions": [
         {
           "sprite": "danmaku_api:item/bullet/circle/white",
@@ -593,6 +603,8 @@
     {
       "type": "minecraft:unstitch",
       "resource": "danmaku_api:bullet_sheet/dagger",
+      "divisor_x": 64,
+      "divisor_y": 64,
       "regions": [
         {
           "sprite": "danmaku_api:item/bullet/dagger/white",
@@ -711,6 +723,8 @@
     {
       "type": "minecraft:unstitch",
       "resource": "danmaku_api:bullet_sheet/mentos",
+      "divisor_x": 64,
+      "divisor_y": 64,
       "regions": [
         {
           "sprite": "danmaku_api:item/bullet/mentos/white",
@@ -829,6 +843,8 @@
     {
       "type": "minecraft:unstitch",
       "resource": "danmaku_api:bullet_sheet/spark",
+      "divisor_x": 64,
+      "divisor_y": 64,
       "regions": [
         {
           "sprite": "danmaku_api:item/bullet/spark/white",
@@ -947,6 +963,8 @@
     {
       "type": "minecraft:unstitch",
       "resource": "danmaku_api:bullet_sheet/star",
+      "divisor_x": 64,
+      "divisor_y": 64,
       "regions": [
         {
           "sprite": "danmaku_api:item/bullet/star/white",

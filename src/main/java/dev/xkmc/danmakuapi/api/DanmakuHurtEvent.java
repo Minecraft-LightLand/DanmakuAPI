@@ -16,6 +16,7 @@ public class DanmakuHurtEvent extends Event {
 	public DanmakuHurtEvent(Player user, LivingEntity target, boolean ans) {
 		this.user = user;
 		this.target = target;
+		this.ans = ans;
 	}
 
 	public boolean getResult() {

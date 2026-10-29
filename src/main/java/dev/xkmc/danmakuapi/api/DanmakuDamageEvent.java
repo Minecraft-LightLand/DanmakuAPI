@@ -4,6 +4,7 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.neoforged.bus.api.Event;
 
+/** Modify danmaku damage source */
 public class DanmakuDamageEvent extends Event {
 
 	private final LivingEntity user;

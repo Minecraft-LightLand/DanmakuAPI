@@ -51,16 +51,6 @@ public record ItemModelProjectileType(Item item, DisplayType display, double spi
 	/** Ints per vertex in a baked quad, matching the block vertex format quads are baked in. */
 	private static final int STRIDE = 8;
 
-	/**
-	 * Item models are authored in a [0,1] cube, so this centres the cube on the projectile and
-	 * tips it over 90 degrees to drop the art into the glide plane. Generated item art sits at
-	 * the middle of that cube, so it lands on the projectile rather than half a unit away.
-	 * <p>
-	 * Applied last, which puts it innermost: the flight rotations below are about the origin, so
-	 * the model has to be centred before they see it.
-	 */
-	private static final Matrix4f FLAT = new Matrix4f().translate(-0.5F, -0.5F, -0.5F).rotateX((float) (Math.PI / 2));
-
 	@Override
 	public void start(MultiBufferSource buffer, List<Ins> list) {
 		List<BakedQuad> quads = list.isEmpty() ? List.of() : getQuads();
@@ -80,7 +70,8 @@ public record ItemModelProjectileType(Item item, DisplayType display, double spi
 		if (spin > 0) {
 			pose.mulPose(Axis.ZP.rotationDegrees((e.tickCount + pTick) * 360f / (float) spin));
 		}
-		pose.mulPose(FLAT);
+		pose.mulPose(Axis.XP.rotationDegrees(90));
+		pose.translate(-0.5f, -0.5F, -0.5f);
 		holder.accept(new Ins(new Matrix4f(pose.last().pose()), (float) Mth.clamp(r.fading(e), 0, 1)));
 	}
 

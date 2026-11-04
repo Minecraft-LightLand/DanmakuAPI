@@ -65,9 +65,6 @@ public class ItemBulletRenderer<T extends ItemBulletEntity> extends EntityRender
 	}
 
 	public void render(T e, float yaw, float pTick, PoseStack pose, MultiBufferSource buffer, int light) {
-		// Iris renders entities a second time into its shadow map; those calls must not enqueue
-		// danmaku, because the queue is flushed only in the main pass.
-		if (!EntityRenderPass.isMainPass(buffer)) return;
 		render(e, pTick, pose);
 	}
 
@@ -78,6 +75,9 @@ public class ItemBulletRenderer<T extends ItemBulletEntity> extends EntityRender
 
 	@Override
 	public void render(T e, float pTick, PoseStack pose) {
+		// Iris renders entities a second time into its shadow map. Danmaku are only queued and
+		// flushed in the main pass, so shadow-pass calls must not enqueue them.
+		if (!EntityRenderPass.isMainPass()) return;
 		if (!(e.getItem().getItem() instanceof DanmakuItem danmaku)) return;
 		pose.pushPose();
 		float scale = e.scale();

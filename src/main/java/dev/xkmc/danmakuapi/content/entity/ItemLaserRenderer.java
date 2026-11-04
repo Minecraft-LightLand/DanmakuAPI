@@ -54,13 +54,13 @@ public class ItemLaserRenderer<T extends ItemLaserEntity> extends EntityRenderer
 	}
 
 	public void render(T e, float yaw, float pTick, PoseStack pose, MultiBufferSource buffer, int light) {
-		// See ItemBulletRenderer: skip Iris's shadow-map entity pass.
-		if (!EntityRenderPass.isMainPass(buffer)) return;
 		render(e, pTick, pose);
 	}
 
 	@Override
 	public void render(T e, float pTick, PoseStack pose) {
+		// See ItemBulletRenderer: skip Iris's shadow-map entity pass.
+		if (!EntityRenderPass.isMainPass()) return;
 		if (!(e.getItem().getItem() instanceof LaserItem danmaku)) return;
 		if (e.tickCount < 2) return;
 		pose.pushPose();

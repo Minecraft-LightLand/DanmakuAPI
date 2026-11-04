@@ -9,6 +9,7 @@ import dev.xkmc.danmakuapi.content.virtual.EraseDanmakuToClient;
 import dev.xkmc.danmakuapi.init.data.*;
 import dev.xkmc.danmakuapi.init.registrate.DanmakuEntities;
 import dev.xkmc.danmakuapi.init.registrate.DanmakuItems;
+import dev.xkmc.danmakuapi.init.registrate.DanmakuSounds;
 import dev.xkmc.l2core.init.reg.registrate.L2Registrate;
 import dev.xkmc.l2core.init.reg.registrate.SimpleEntry;
 import dev.xkmc.l2core.init.reg.simple.Reg;
@@ -40,8 +41,9 @@ public class DanmakuAPI {
 
 	public DanmakuAPI() {
 		DanmakuItems.register();
+		DanmakuSounds.register();
 		DanmakuEntities.register();
-		DanmakuConfig.init();
+		DanmakuConfig.init();	
 	}
 
 	@SubscribeEvent(priority = EventPriority.HIGH)

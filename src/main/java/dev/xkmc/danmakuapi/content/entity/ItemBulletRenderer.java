@@ -4,6 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import dev.xkmc.danmakuapi.api.GrazeHelper;
 import dev.xkmc.danmakuapi.api.IDanmakuEntity;
 import dev.xkmc.danmakuapi.content.item.DanmakuItem;
+import dev.xkmc.danmakuapi.content.render.EntityRenderPass;
 import dev.xkmc.danmakuapi.init.data.DanmakuConfig;
 import dev.xkmc.fastprojectileapi.entity.SimplifiedProjectile;
 import dev.xkmc.fastprojectileapi.render.ProjectileRenderer;
@@ -64,6 +65,9 @@ public class ItemBulletRenderer<T extends ItemBulletEntity> extends EntityRender
 	}
 
 	public void render(T e, float yaw, float pTick, PoseStack pose, MultiBufferSource buffer, int light) {
+		// Iris renders entities a second time into its shadow map; those calls must not enqueue
+		// danmaku, because the queue is flushed only in the main pass.
+		if (!EntityRenderPass.isMainPass(buffer)) return;
 		render(e, pTick, pose);
 	}
 

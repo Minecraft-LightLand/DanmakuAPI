@@ -152,6 +152,13 @@ repositories {
         }
     }
     maven {
+        name = 'Modrinth'
+        url = 'https://api.modrinth.com/maven'
+        content {
+            includeGroup "maven.modrinth"
+        }
+    }
+    maven {
         // Location of the maven that hosts JEI files (and TiC)
         name 'Progwml6 maven'
         url 'https://dvs1.progwml6.com/files/maven'
@@ -176,6 +183,10 @@ dependencies {
 
     runtimeOnly "dev.xkmc:l2itemselector:${l2itemselector_ver}"
     runtimeOnly "dev.xkmc:l2modularblocks:${l2modularblocks_ver}"
+
+    // Shader / rendering compatibility testing. Iris 1.8.12 requires Sodium 0.6.x.
+    implementation "maven.modrinth:sodium:${sodium_version}"
+    implementation "maven.modrinth:iris:${iris_version}"
 
     testImplementation "com.mojang:datafixerupper:8.0.16"
     testImplementation "com.google.guava:guava:32.1.2-jre"

@@ -5,6 +5,7 @@ import com.mojang.math.Axis;
 import dev.xkmc.danmakuapi.api.GrazeHelper;
 import dev.xkmc.danmakuapi.api.IDanmakuEntity;
 import dev.xkmc.danmakuapi.content.item.LaserItem;
+import dev.xkmc.danmakuapi.content.render.EntityRenderPass;
 import dev.xkmc.danmakuapi.init.data.DanmakuConfig;
 import dev.xkmc.fastprojectileapi.entity.SimplifiedProjectile;
 import dev.xkmc.fastprojectileapi.render.ProjectileRenderer;
@@ -53,6 +54,8 @@ public class ItemLaserRenderer<T extends ItemLaserEntity> extends EntityRenderer
 	}
 
 	public void render(T e, float yaw, float pTick, PoseStack pose, MultiBufferSource buffer, int light) {
+		// See ItemBulletRenderer: skip Iris's shadow-map entity pass.
+		if (!EntityRenderPass.isMainPass(buffer)) return;
 		render(e, pTick, pose);
 	}
 

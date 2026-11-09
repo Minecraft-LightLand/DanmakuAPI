@@ -2,8 +2,7 @@ package dev.xkmc.danmakuapi.content.spell.spellcard;
 
 import dev.xkmc.danmakuapi.api.IDanmakuEntity;
 import dev.xkmc.fastprojectileapi.entity.ProjectileMovement;
-import dev.xkmc.l2serial.serialization.marker.SerialClass;
-import dev.xkmc.l2serial.serialization.marker.SerialField;
+import dev.xkmc.l2serial.serialization.SerialClass;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.phys.Vec3;
 
@@ -19,10 +18,10 @@ public class ListSpellCard extends SpellCard {
 		return ans;
 	}
 
-	@SerialField
+	@SerialClass.SerialField
 	public final ArrayList<ActualSpellCard> list = new ArrayList<>();
 
-	@SerialField
+	@SerialClass.SerialField
 	public int index, health = 20;
 
 	public ActualSpellCard card() {

@@ -1,6 +1,6 @@
 package dev.xkmc.danmakuapi.compat;
 
-import net.neoforged.fml.ModList;
+import net.minecraftforge.fml.ModList;
 
 /**
  * Soft dependency on Iris. Iris is only referenced from a nested holder so that the class is
@@ -24,7 +24,12 @@ public final class IrisCompat {
 	private static final class ShadowRendererHolder {
 
 		private static boolean isActive() {
-			return net.irisshaders.iris.shadows.ShadowRenderer.ACTIVE;
+			try {
+				var cls = Class.forName("net.irisshaders.iris.shadows.ShadowRenderer");
+				return cls.getField("ACTIVE").getBoolean(null);
+			} catch (Throwable e) {
+				return false;
+			}
 		}
 
 	}

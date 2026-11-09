@@ -1,6 +1,6 @@
 package dev.xkmc.danmakuapi.content.spell.spellcard;
 
-import dev.xkmc.l2serial.serialization.marker.SerialClass;
+import dev.xkmc.l2serial.serialization.SerialClass;
 import net.minecraft.world.phys.Vec3;
 
 @SerialClass

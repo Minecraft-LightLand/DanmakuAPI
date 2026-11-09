@@ -137,7 +137,7 @@ public class HueVariantTextureLoader extends SimplePreparableReloadListener<@Nul
 	}
 
 	private static int clamp(double value) {
-		return (int) Math.round(Math.clamp(value, 0.0, 1.0) * 255.0);
+		return (int) Math.round(Math.max(0.0, Math.min(1.0, value)) * 255.0);
 	}
 
 	/**

@@ -1,18 +1,17 @@
 package dev.xkmc.danmakuapi.content.spell.mover;
 
 import dev.xkmc.fastprojectileapi.entity.ProjectileMovement;
-import dev.xkmc.l2serial.serialization.marker.SerialClass;
-import dev.xkmc.l2serial.serialization.marker.SerialField;
+import dev.xkmc.l2serial.serialization.SerialClass;
 
 import java.util.ArrayList;
 
 @SerialClass
 public class CompositeMover extends DanmakuMover {
 
-	@SerialField
+	@SerialClass.SerialField
 	private final ArrayList<Entry> list = new ArrayList<>();
 
-	@SerialField
+	@SerialClass.SerialField
 	private int total = 0, index = 0;
 
 	public CompositeMover() {

@@ -3,8 +3,7 @@ package dev.xkmc.danmakuapi.content.custom.forms;
 import dev.xkmc.danmakuapi.content.spell.spellcard.ActualSpellCard;
 import dev.xkmc.danmakuapi.content.spell.spellcard.CardHolder;
 import dev.xkmc.danmakuapi.content.spell.spellcard.Ticker;
-import dev.xkmc.l2serial.serialization.marker.SerialClass;
-import dev.xkmc.l2serial.serialization.marker.SerialField;
+import dev.xkmc.l2serial.serialization.SerialClass;
 import dev.xkmc.l2serial.util.Wrappers;
 
 import javax.annotation.OverridingMethodsMustInvokeSuper;
@@ -15,7 +14,7 @@ import java.util.List;
 public abstract class ISpellAct<D, C extends ActualSpellCard> extends Ticker<C> {
 
 
-	@SerialField
+	@SerialClass.SerialField
 	private final ArrayList<Ticker<?>> tickers = new ArrayList<>();
 
 	private List<Ticker<?>> temp;

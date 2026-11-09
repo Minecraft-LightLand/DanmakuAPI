@@ -1,67 +1,61 @@
-plugins {
-    id 'java-library'
-    id 'eclipse'
-    id 'idea'
-    id 'maven-publish'
-    id 'net.neoforged.moddev' version '2.0.80'
-}
-
-version = mod_version
-group = 'dev.xkmc'
-
-repositories {
-    mavenLocal()
-}
-
-base {
-    archivesName = mod_id
-}
-
-java.toolchain.languageVersion = JavaLanguageVersion.of(21)
-
-sourceSets {
-    client {}
-    server {}
-    data {}
-    common {}
-}
-
-neoForge {
-    // We currently only support NeoForge versions later than 21.0.x
-    // See https://projects.neoforged.net/neoforged/neoforge for the latest updates
-    version = "${neo_version}"
-
-    parchment {
-        mappingsVersion = project.parchment_mappings_version
-        minecraftVersion = project.parchment_minecraft_version
+buildscript {
+    repositories {
+        maven { url = 'https://maven.minecraftforge.net' }
+        mavenCentral()
+        maven { url = 'https://repo.spongepowered.org/repository/maven-public' }
     }
+    dependencies {
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
+        classpath "org.spongepowered:mixingradle:${mixingradle_version}"
+    }
+}
 
-    // Validate AT files and raise errors when they have invalid targets
-    // This option is false by default, but turning it on is recommended
-    //validateAccessTransformers = true
-    accessTransformers.from "./src/main/resources/META-INF/accesstransformer.cfg"
+apply plugin: 'net.minecraftforge.gradle'
+apply plugin: 'eclipse'
+apply plugin: 'maven-publish'
+apply plugin: 'org.spongepowered.mixin'
 
+version = "${ll_version}"
+group = "dev.xkmc.${modid}"
+archivesBaseName = "${modid}"
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(17)
+
+minecraft {
+    mappings channel: 'official', version: "${minecraft_version}"
     runs {
         client {
-            client()
+            workingDirectory project.file('run')
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.logging.console.level', 'info'
+            mods {
+                "${modid}" {
+                    source sourceSets.main
+                }
+            }
         }
+
         data {
-            data()
-
-            programArguments.addAll '--mod', project.mod_id, '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
-
+            workingDirectory project.file('run')
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.logging.console.level', 'info'
+            args '--mod', "${modid}", '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
+            mods {
+                "${modid}" {
+                    source sourceSets.main
+                }
+            }
         }
+
         server {
-            server()
-        }
-        gameTestServer {
-            type = "gameTestServer"
-        }
-    }
-
-    mods {
-        "${mod_id}" {
-            sourceSet sourceSets.main
+            workingDirectory project.file('run')
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.logging.console.level', 'info'
+            mods {
+                "${modid}" {
+                    source sourceSets.main
+                }
+            }
         }
     }
 }
@@ -72,122 +66,54 @@ java {
     withSourcesJar()
 }
 
-tasks.withType(ProcessResources).configureEach {
-    var replaceProperties = [
-            minecraft_version   : minecraft_version, minecraft_version_range: minecraft_version_range,
-            neo_version         : neo_version, neo_version_range: neo_version_range,
-            loader_version_range: loader_version_range,
-            mod_id              : mod_id, mod_name: mod_name, mod_license: mod_license, mod_version: mod_version,
-            mod_authors         : mod_authors, mod_description: mod_description,
-    ]
-    inputs.properties replaceProperties
-
-    filesMatching(['META-INF/neoforge.mods.toml']) {
-        expand replaceProperties + [project: project]
+repositories {
+    flatDir {
+        dirs 'libs'
+    }
+    mavenCentral()
+    maven {
+        url "https://maven.tterrag.com/"
     }
 }
 
-// Example configuration to allow publishing using the maven-publish plugin
+dependencies {
+    minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
+    implementation fg.deobf("com.tterrag.registrate:Registrate:${registrate_version}")
+    implementation fg.deobf("dev.xkmc.l2library:l2library:${l2library_version}-slim")
+    implementation fg.deobf("dev.xkmc.l2serial:l2serial:${l2serial_version}")
+    implementation fg.deobf("dev.xkmc.l2damagetracker:l2damagetracker:${l2damagetracker_version}")
+    implementation fg.deobf("dev.xkmc.fastprojectileapi:fast_projectile_api:${fast_projectile_api_version}")
+}
+
+jar {
+    manifest {
+        attributes([
+                "Specification-Title"     : "${modid}",
+                "Specification-Vendor"    : "xkmc",
+                "Specification-Version"   : "1",
+                "Implementation-Title"    : project.name,
+                "Implementation-Version"  : project.jar.archiveVersion,
+                "Implementation-Vendor"   : "xkmc",
+                "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+        ])
+    }
+}
+
+jar.finalizedBy('reobfJar')
+
 publishing {
     publications {
-        register('mavenJava', MavenPublication) {
-            from components.java
+        mavenJava(MavenPublication) {
+            artifact jar
         }
     }
     repositories {
         maven {
-            url "file://${project.projectDir}/repo"
+            url "file://${project.projectDir}/mcmodsrepo"
         }
     }
 }
 
 tasks.withType(JavaCompile).configureEach {
-    options.encoding = 'UTF-8' // Use the UTF-8 charset for Java compilation
-}
-
-jar {
-    // Registrate's datagen cache is a build artifact living under src/generated/resources.
-    // It is needed for incremental datagen but must not ship in the mod jar.
-    exclude '.cache/**'
-    manifest {
-        attributes([
-                "Specification-Title"     : "${mod_id}",
-                "Specification-Vendor"    : "xkmc",
-                "Specification-Version"   : "1", // We are version 1 of ourselves
-                "Implementation-Title"    : project.name,
-                "Implementation-Version"  : project.jar.archiveVersion,
-                "Implementation-Vendor"   : "xkmc",
-                "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
-                'MixinConfigs'            : "${mod_id}.mixins.json"
-        ])
-    }
-}
-
-dependencies {
-    //annotationProcessor "org.spongepowered:mixin:${mixin_version}:processor"
-    //compileOnly fg.deobf("com.tterrag.registrate:Registrate:${registrate_version}")
-}
-
-// project specific
-
-repositories {
-    flatDir {
-        dirs 'libs'
-    }
-    maven { // Registrate
-        url "https://maven.ithundxr.dev/snapshots"
-    }
-    maven {
-        url = "https://maven.theillusivec4.top/"
-    }
-    maven {
-        // Location of the maven for vazkii's mods
-        name 'blamejared'
-        url 'https://maven.blamejared.com'
-    }
-    maven {
-        url 'https://www.cursemaven.com'
-        content {
-            includeGroup "curse.maven"
-        }
-    }
-    maven {
-        name = 'Modrinth'
-        url = 'https://api.modrinth.com/maven'
-        content {
-            includeGroup "maven.modrinth"
-        }
-    }
-    maven {
-        // Location of the maven that hosts JEI files (and TiC)
-        name 'Progwml6 maven'
-        url 'https://dvs1.progwml6.com/files/maven'
-    }
-    mavenLocal();
-}
-
-dependencies {
-    implementation "mezz.jei:jei-${jei_minecraft_version}:${jei_version}"
-    implementation "com.tterrag.registrate:Registrate:${registrate_version}"
-    implementation "dev.xkmc:l2serial:${l2serial_ver}"
-    implementation "dev.xkmc:l2core:${l2core_ver}"
-    implementation "dev.xkmc:fast_projectile_api:${fast_projectile_api_ver}"
-    implementation "dev.xkmc:l2damagetracker:${l2damagetracker_ver}"
-    implementation "dev.xkmc:l2library:${l2library_ver}"
-
-    implementation "dev.xkmc:l2menustacker:${l2menustacker_ver}"
-    implementation "dev.xkmc:l2tabs:${l2tabs_ver}"
-
-
-    implementation "com.tlm:touhoulittlemaid:1.21-release-1.1.12-snapshot4"
-
-    runtimeOnly "dev.xkmc:l2itemselector:${l2itemselector_ver}"
-    runtimeOnly "dev.xkmc:l2modularblocks:${l2modularblocks_ver}"
-
-    // Shader / rendering compatibility testing. Iris 1.8.12 requires Sodium 0.6.x.
-    implementation "maven.modrinth:sodium:${sodium_version}"
-    implementation "maven.modrinth:iris:${iris_version}"
-
-    testImplementation "com.mojang:datafixerupper:8.0.16"
-    testImplementation "com.google.guava:guava:32.1.2-jre"
+    options.encoding = 'UTF-8'
 }

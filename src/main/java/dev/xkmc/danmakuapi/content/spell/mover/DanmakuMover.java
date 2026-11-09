@@ -1,7 +1,7 @@
 package dev.xkmc.danmakuapi.content.spell.mover;
 
 import dev.xkmc.fastprojectileapi.entity.ProjectileMovement;
-import dev.xkmc.l2serial.serialization.marker.SerialClass;
+import dev.xkmc.l2serial.serialization.SerialClass;
 
 @SerialClass
 public abstract class DanmakuMover {

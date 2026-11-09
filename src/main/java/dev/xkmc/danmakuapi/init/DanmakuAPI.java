@@ -9,33 +9,28 @@ import dev.xkmc.danmakuapi.content.virtual.EraseDanmakuToClient;
 import dev.xkmc.danmakuapi.init.data.*;
 import dev.xkmc.danmakuapi.init.registrate.DanmakuEntities;
 import dev.xkmc.danmakuapi.init.registrate.DanmakuItems;
-import dev.xkmc.l2core.init.reg.registrate.L2Registrate;
-import dev.xkmc.l2core.init.reg.registrate.SimpleEntry;
-import dev.xkmc.l2core.init.reg.simple.Reg;
-import dev.xkmc.l2serial.network.PacketHandler;
+import dev.xkmc.l2library.base.L2Registrate;
+import dev.xkmc.l2library.serial.config.PacketHandler;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.DyeColor;
-import net.neoforged.bus.api.EventPriority;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.fml.common.Mod;
-import net.neoforged.neoforge.data.event.GatherDataEvent;
+import net.minecraftforge.data.event.GatherDataEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.network.NetworkDirection;
 import org.slf4j.Logger;
 
 @Mod(DanmakuAPI.MODID)
-@EventBusSubscriber(modid = DanmakuAPI.MODID, bus = EventBusSubscriber.Bus.MOD)
+@Mod.EventBusSubscriber(modid = DanmakuAPI.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class DanmakuAPI {
 
 	public static final String MODID = "danmaku_api";
 	public static final Logger LOGGER = LogUtils.getLogger();
-	public static final Reg REG = new Reg(MODID);
 	public static final L2Registrate REGISTRATE = new L2Registrate(MODID);
-	public static final PacketHandler HANDLER = new PacketHandler(MODID, 1,
-			e -> e.create(SpellSetToServer.class, PacketHandler.NetDir.PLAY_TO_SERVER),
-		e -> e.create(DanmakuToClientPacket.class, PacketHandler.NetDir.PLAY_TO_CLIENT),
-		e -> e.create(EraseDanmakuToClient.class, PacketHandler.NetDir.PLAY_TO_CLIENT),
-		e -> e.create(DanmakuFriendlyToClient.class, PacketHandler.NetDir.PLAY_TO_CLIENT)
+	public static final PacketHandler HANDLER = new PacketHandler(new ResourceLocation(MODID, "main"), 1,
+			e -> e.create(SpellSetToServer.class, NetworkDirection.PLAY_TO_SERVER),
+			e -> e.create(DanmakuToClientPacket.class, NetworkDirection.PLAY_TO_CLIENT),
+			e -> e.create(EraseDanmakuToClient.class, NetworkDirection.PLAY_TO_CLIENT),
+			e -> e.create(DanmakuFriendlyToClient.class, NetworkDirection.PLAY_TO_CLIENT)
 	);
 
 	public DanmakuAPI() {
@@ -48,11 +43,12 @@ public class DanmakuAPI {
 	public static void gatherData(GatherDataEvent event) {
 		REGISTRATE.addDataGenerator(ProviderType.LANG, DanmakuLang::genLang);
 		REGISTRATE.addDataGenerator(ProviderType.ITEM_TAGS, DanmakuTagGen::genItemTag);
-		new DanmakuDamageTypes(REGISTRATE).generate();
+		new DanmakuDamageTypes(event.getGenerator().getPackOutput(),
+				event.getLookupProvider(), event.getExistingFileHelper()).generate(true, event.getGenerator());
 	}
 
 	public static ResourceLocation loc(String id) {
-		return ResourceLocation.fromNamespaceAndPath(MODID, id);
+		return new ResourceLocation(MODID, id);
 	}
 
 }

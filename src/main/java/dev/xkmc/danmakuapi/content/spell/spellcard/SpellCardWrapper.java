@@ -2,8 +2,7 @@ package dev.xkmc.danmakuapi.content.spell.spellcard;
 
 import dev.xkmc.danmakuapi.api.IDanmakuEntity;
 import dev.xkmc.fastprojectileapi.entity.ProjectileMovement;
-import dev.xkmc.l2serial.serialization.marker.SerialClass;
-import dev.xkmc.l2serial.serialization.marker.SerialField;
+import dev.xkmc.l2serial.serialization.SerialClass;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
@@ -11,10 +10,10 @@ import org.jetbrains.annotations.Nullable;
 @SerialClass
 public class SpellCardWrapper extends SpellCard {
 
-	@SerialField
+	@SerialClass.SerialField
 	public String modelId;
 
-	@SerialField
+	@SerialClass.SerialField
 	public SpellCard card;
 
 	@Override

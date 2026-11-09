@@ -7,18 +7,17 @@ import dev.xkmc.danmakuapi.content.spell.mover.CompositeMover;
 import dev.xkmc.danmakuapi.content.spell.mover.RectMover;
 import dev.xkmc.danmakuapi.content.spell.spellcard.CardHolder;
 import dev.xkmc.danmakuapi.content.spell.spellcard.Ticker;
-import dev.xkmc.l2serial.serialization.marker.SerialClass;
-import dev.xkmc.l2serial.serialization.marker.SerialField;
+import dev.xkmc.l2serial.serialization.SerialClass;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.phys.Vec3;
 
 @SerialClass
 public class HomingSpellForm extends ISpellForm<HomingSpellFormData> {
 
-	@SerialField
+	@SerialClass.SerialField
 	private HomingSpellFormData data;
 
-	@SerialField
+	@SerialClass.SerialField
 	private int step, tick;
 
 	@Override
@@ -59,7 +58,7 @@ public class HomingSpellForm extends ISpellForm<HomingSpellFormData> {
 	@SerialClass
 	public static class Stage extends Ticker<HomingSpellForm> {
 
-		@SerialField
+		@SerialClass.SerialField
 		private Vec3 pos = Vec3.ZERO;
 
 		private Stage setup(Vec3 pos, int time) {

@@ -2,7 +2,7 @@ package dev.xkmc.danmakuapi.api;
 
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
-import net.neoforged.bus.api.Event;
+import net.minecraftforge.eventbus.api.Event;
 
 /** Modify danmaku damage source */
 public class DanmakuDamageEvent extends Event {

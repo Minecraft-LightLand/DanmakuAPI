@@ -1,7 +1,6 @@
 package dev.xkmc.danmakuapi.content.spell.spellcard;
 
-import dev.xkmc.l2serial.serialization.marker.SerialClass;
-import dev.xkmc.l2serial.serialization.marker.SerialField;
+import dev.xkmc.l2serial.serialization.SerialClass;
 import dev.xkmc.l2serial.util.Wrappers;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
@@ -13,10 +12,10 @@ import java.util.List;
 @SerialClass
 public class ActualSpellCard extends SpellCard {
 
-	@SerialField
+	@SerialClass.SerialField
 	public int tick, hit;
 
-	@SerialField
+	@SerialClass.SerialField
 	private final ArrayList<Ticker<?>> tickers = new ArrayList<>();
 
 	private List<Ticker<?>> temp;

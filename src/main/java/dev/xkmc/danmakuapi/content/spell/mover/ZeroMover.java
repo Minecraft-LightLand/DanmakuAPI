@@ -1,8 +1,7 @@
 package dev.xkmc.danmakuapi.content.spell.mover;
 
 import dev.xkmc.fastprojectileapi.entity.ProjectileMovement;
-import dev.xkmc.l2serial.serialization.marker.SerialClass;
-import dev.xkmc.l2serial.serialization.marker.SerialField;
+import dev.xkmc.l2serial.serialization.SerialClass;
 import net.minecraft.world.phys.Vec3;
 
 @SerialClass
@@ -21,9 +20,9 @@ public final class ZeroMover extends DanmakuMover {
 		return new Vec3(closest(a.x, b.x), closest(a.y, b.y), closest(a.z, b.z));
 	}
 
-	@SerialField
+	@SerialClass.SerialField
 	private Vec3 rot0, rot1;
-	@SerialField
+	@SerialClass.SerialField
 	private int time;
 
 	@Deprecated

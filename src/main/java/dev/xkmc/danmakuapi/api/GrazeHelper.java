@@ -6,7 +6,7 @@ import net.minecraft.world.entity.OwnableEntity;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.entity.player.Player;
-import net.neoforged.neoforge.common.NeoForge;
+import net.minecraftforge.common.MinecraftForge;
 
 public class GrazeHelper {
 
@@ -22,7 +22,9 @@ public class GrazeHelper {
 
 	public static boolean shouldPlayerHurt(Player player, LivingEntity le) {
 		boolean ans = shouldPlayerHurtImpl(player, le);
-		return NeoForge.EVENT_BUS.post(new DanmakuHurtEvent(player, le, ans)).getResult();
+		var event = new DanmakuHurtEvent(player, le, ans);
+		MinecraftForge.EVENT_BUS.post(event);
+		return event.getAnswer();
 	}
 
 	private static boolean shouldPlayerHurtImpl(Player player, LivingEntity le) {

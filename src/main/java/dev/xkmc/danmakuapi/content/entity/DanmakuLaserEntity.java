@@ -6,11 +6,10 @@ import dev.xkmc.fastprojectileapi.collision.LaserHitHelper;
 import dev.xkmc.fastprojectileapi.entity.BaseLaser;
 import dev.xkmc.l2serial.serialization.codec.PacketCodec;
 import dev.xkmc.l2serial.serialization.codec.TagCodec;
-import dev.xkmc.l2serial.serialization.marker.SerialClass;
-import dev.xkmc.l2serial.serialization.marker.SerialField;
+import dev.xkmc.l2serial.serialization.SerialClass;
 import dev.xkmc.l2serial.util.Wrappers;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -20,20 +19,20 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.entity.IEntityWithComplexSpawn;
+import net.minecraftforge.entity.IEntityAdditionalSpawnData;
 
 import java.util.Objects;
 
 @SerialClass
-public class DanmakuLaserEntity extends BaseLaser implements IEntityWithComplexSpawn, IDanmakuEntity {
+public class DanmakuLaserEntity extends BaseLaser implements IEntityAdditionalSpawnData, IDanmakuEntity {
 
-	@SerialField
+	@SerialClass.SerialField
 	protected int life = 0, prepare, start, end;
-	@SerialField
+	@SerialClass.SerialField
 	private boolean bypassWall = false;
-	@SerialField
+	@SerialClass.SerialField
 	public float damage = 0, length = 0;
-	@SerialField
+	@SerialClass.SerialField
 	public boolean setupLength;
 
 	/**
@@ -178,24 +177,24 @@ public class DanmakuLaserEntity extends BaseLaser implements IEntityWithComplexS
 
 	public void addAdditionalSaveData(CompoundTag nbt) {
 		super.addAdditionalSaveData(nbt);
-		nbt.put("auto-serial", Objects.requireNonNull(new TagCodec(level().registryAccess()).toTag(new CompoundTag(), this)));
+		nbt.put("auto-serial", Objects.requireNonNull(TagCodec.toTag(new CompoundTag(), this)));
 	}
 
 	public void readAdditionalSaveData(CompoundTag nbt) {
 		super.readAdditionalSaveData(nbt);
 		if (nbt.contains("auto-serial")) {
-			Wrappers.run(() -> new TagCodec(level().registryAccess()).fromTag(nbt.getCompound("auto-serial"), getClass(), this));
+			Wrappers.run(() -> TagCodec.fromTag(nbt.getCompound("auto-serial"), getClass(), this, e -> true));
 		}
 	}
 
 	@Override
-	public void writeSpawnData(RegistryFriendlyByteBuf buffer) {
+	public void writeSpawnData(FriendlyByteBuf buffer) {
 		super.writeSpawnData(buffer);
 		PacketCodec.to(buffer, this);
 	}
 
 	@Override
-	public void readSpawnData(RegistryFriendlyByteBuf additionalData) {
+	public void readSpawnData(FriendlyByteBuf additionalData) {
 		super.readSpawnData(additionalData);
 		PacketCodec.from(additionalData, getClass(), Wrappers.cast(this));
 	}

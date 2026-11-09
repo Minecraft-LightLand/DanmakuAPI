@@ -1,31 +1,31 @@
 package dev.xkmc.danmakuapi.init.data;
 
-import dev.xkmc.danmakuapi.init.DanmakuAPI;
-import dev.xkmc.l2core.util.ConfigInit;
-import net.neoforged.neoforge.common.ModConfigSpec;
+import net.minecraftforge.common.ForgeConfigSpec;
+import net.minecraftforge.fml.ModLoadingContext;
+import net.minecraftforge.fml.config.ModConfig;
+import org.apache.commons.lang3.tuple.Pair;
 
 public class DanmakuConfig {
 
-	public static class Client extends ConfigInit {
+	public static class Client {
 
-		public final ModConfigSpec.BooleanValue laserRenderAdditive;
-		public final ModConfigSpec.BooleanValue laserRenderInverted;
-		public final ModConfigSpec.DoubleValue laserTransparency;
-		public final ModConfigSpec.DoubleValue farDanmakuFading;
-		public final ModConfigSpec.DoubleValue selfDanmakuFading;
-		public final ModConfigSpec.DoubleValue fadingStart;
-		public final ModConfigSpec.DoubleValue fadingEnd;
-		public final ModConfigSpec.IntValue powerInfoXAnchor;
-		public final ModConfigSpec.IntValue powerInfoXOffset;
-		public final ModConfigSpec.IntValue powerInfoYAnchor;
-		public final ModConfigSpec.IntValue powerInfoYOffset;
+		public final ForgeConfigSpec.BooleanValue laserRenderAdditive;
+		public final ForgeConfigSpec.BooleanValue laserRenderInverted;
+		public final ForgeConfigSpec.DoubleValue laserTransparency;
+		public final ForgeConfigSpec.DoubleValue farDanmakuFading;
+		public final ForgeConfigSpec.DoubleValue selfDanmakuFading;
+		public final ForgeConfigSpec.DoubleValue fadingStart;
+		public final ForgeConfigSpec.DoubleValue fadingEnd;
+		public final ForgeConfigSpec.IntValue powerInfoXAnchor;
+		public final ForgeConfigSpec.IntValue powerInfoXOffset;
+		public final ForgeConfigSpec.IntValue powerInfoYAnchor;
+		public final ForgeConfigSpec.IntValue powerInfoYOffset;
 
 
-		Client(Builder builder) {
-			markL2();
-			laserRenderAdditive = builder.text("Additive laser layer").define("laserRenderAdditive", true);
-			laserRenderInverted = builder.text("Inverted layer layer").define("laserRenderInverted", true);
-			laserTransparency = builder.text("Laser outer layer transparency").defineInRange("laserTransparency", 0.5, 0, 1);
+		Client(ForgeConfigSpec.Builder builder) {
+			laserRenderAdditive = builder.comment("Additive laser layer").define("laserRenderAdditive", true);
+			laserRenderInverted = builder.comment("Inverted layer layer").define("laserRenderInverted", true);
+			laserTransparency = builder.comment("Laser outer layer transparency").defineInRange("laserTransparency", 0.5, 0, 1);
 			farDanmakuFading = builder.defineInRange("farDanmakuFading", 0.5d, 0, 1);
 			selfDanmakuFading = builder.defineInRange("selfDanmakuFading", 0.5d, 0, 1);
 			fadingStart = builder.defineInRange("fadingStart", 8d, 0, 128);
@@ -38,44 +38,60 @@ public class DanmakuConfig {
 
 	}
 
-	public static class Server extends ConfigInit {
+	public static class Server {
 
-		public final ModConfigSpec.IntValue playerDanmakuCooldown;
-		public final ModConfigSpec.IntValue playerLaserCooldown;
-		public final ModConfigSpec.IntValue playerSpellCooldown;
-		public final ModConfigSpec.IntValue playerLaserDuration;
+		public final ForgeConfigSpec.IntValue playerDanmakuCooldown;
+		public final ForgeConfigSpec.IntValue playerLaserCooldown;
+		public final ForgeConfigSpec.IntValue playerSpellCooldown;
+		public final ForgeConfigSpec.IntValue playerLaserDuration;
 
-		public final ModConfigSpec.IntValue customSpellMaxDuration;
-		public final ModConfigSpec.IntValue ringSpellDanmakuPerItemCost;
-		public final ModConfigSpec.IntValue homingSpellDanmakuPerItemCost;
+		public final ForgeConfigSpec.IntValue customSpellMaxDuration;
+		public final ForgeConfigSpec.IntValue ringSpellDanmakuPerItemCost;
+		public final ForgeConfigSpec.IntValue homingSpellDanmakuPerItemCost;
 
-		Server(Builder builder) {
-			markL2();
-			playerDanmakuCooldown = builder.text("Player item cooldown for using danmaku")
+		Server(ForgeConfigSpec.Builder builder) {
+			builder.push("danmaku_battle");
+			playerDanmakuCooldown = builder.comment("Player item cooldown for using danmaku")
 					.defineInRange("playerDanmakuCooldown", 20, 5, 1000);
-			playerLaserCooldown = builder.text("Player item cooldown for using laser")
+			playerLaserCooldown = builder.comment("Player item cooldown for using laser")
 					.defineInRange("playerLaserCooldown", 80, 5, 1000);
-			playerSpellCooldown = builder.text("Player item cooldown for using spellcard")
+			playerSpellCooldown = builder.comment("Player item cooldown for using spellcard")
 					.defineInRange("playerSpellCooldown", 40, 5, 1000);
-			playerLaserDuration = builder.text("Player laser duration")
+			playerLaserDuration = builder.comment("Player laser duration")
 					.defineInRange("playerLaserDuration", 100, 5, 1000);
+			builder.pop();
 
-			customSpellMaxDuration = builder.text("Max duration of custom spell allowed")
+			builder.push("custom_spell");
+			customSpellMaxDuration = builder.comment("Max duration of custom spell allowed")
 					.defineInRange("customSpellMaxDuration", 60, 1, 1000);
-			ringSpellDanmakuPerItemCost = builder.text("Ring Spell: Max number of bullet allowed per item cost")
+			ringSpellDanmakuPerItemCost = builder.comment("Ring Spell: Max number of bullet allowed per item cost")
 					.defineInRange("ringSpellDanmakuPerItemCost", 32, 1, 1024);
-			homingSpellDanmakuPerItemCost = builder.text("Homing Spell: Max number of bullet allowed per item cost")
+			homingSpellDanmakuPerItemCost = builder.comment("Homing Spell: Max number of bullet allowed per item cost")
 					.defineInRange("homingSpellDanmakuPerItemCost", 8, 1, 1024);
-
+			builder.pop();
 		}
 
 	}
 
-	public static final Client CLIENT = DanmakuAPI.REGISTRATE.registerClient(Client::new);
-	public static final Server SERVER = DanmakuAPI.REGISTRATE.registerSynced(Server::new);
+	public static final ForgeConfigSpec CLIENT_SPEC;
+	public static final Client CLIENT;
 
-	public static void init() {
+	public static final ForgeConfigSpec SERVER_SPEC;
+	public static final Server SERVER;
+
+	static {
+		final Pair<Client, ForgeConfigSpec> client = new ForgeConfigSpec.Builder().configure(Client::new);
+		CLIENT_SPEC = client.getRight();
+		CLIENT = client.getLeft();
+
+		final Pair<Server, ForgeConfigSpec> server = new ForgeConfigSpec.Builder().configure(Server::new);
+		SERVER_SPEC = server.getRight();
+		SERVER = server.getLeft();
 	}
 
+	public static void init() {
+		ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CLIENT_SPEC);
+		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, SERVER_SPEC);
+	}
 
 }

@@ -3,18 +3,17 @@ package dev.xkmc.danmakuapi.content.custom.forms;
 import dev.xkmc.danmakuapi.content.custom.data.RingSpellFormData;
 import dev.xkmc.danmakuapi.content.entity.DanmakuHelper;
 import dev.xkmc.danmakuapi.content.spell.item.PlayerHolder;
-import dev.xkmc.l2serial.serialization.marker.SerialClass;
-import dev.xkmc.l2serial.serialization.marker.SerialField;
+import dev.xkmc.l2serial.serialization.SerialClass;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
 
 @SerialClass
 public class RingSpellForm extends ISpellForm<RingSpellFormData> {
 
-	@SerialField
+	@SerialClass.SerialField
 	private RingSpellFormData data;
 
-	@SerialField
+	@SerialClass.SerialField
 	private int step, tick;
 
 	@Override

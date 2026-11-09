@@ -4,7 +4,7 @@ import dev.xkmc.danmakuapi.api.GrazeHelper;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.neoforge.client.IItemDecorator;
+import net.minecraftforge.client.IItemDecorator;
 
 public class DanmakuItemDeco implements IItemDecorator {
 

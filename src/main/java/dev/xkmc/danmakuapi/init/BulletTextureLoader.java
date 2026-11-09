@@ -11,10 +11,10 @@ import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.world.item.DyeColor;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.client.event.RegisterClientReloadListenersEvent;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import net.minecraftforge.client.event.RegisterClientReloadListenersEvent;
 import org.slf4j.Logger;
 
 import java.io.IOException;
@@ -104,13 +104,13 @@ public class BulletTextureLoader implements PreparableReloadListener {
 					image.setPixelRGBA(x, y, cls < classes ? palette.getPixelRGBA(cls, row) : 0);
 				}
 			}
-			list.add(new Built(ResourceLocation.fromNamespaceAndPath(DanmakuAPI.MODID,
+			list.add(new Built(new ResourceLocation(DanmakuAPI.MODID,
 					"textures/entity/bullet/" + shape + "/" + dye.getName() + ".png"), image));
 		}
 	}
 
 	private static NativeImage read(ResourceManager manager, String path) {
-		ResourceLocation location = ResourceLocation.fromNamespaceAndPath(DanmakuAPI.MODID, path);
+		ResourceLocation location = new ResourceLocation(DanmakuAPI.MODID, path);
 		Optional<Resource> resource = manager.getResource(location);
 		if (resource.isEmpty()) {
 			LOGGER.warn("Missing packed danmaku texture {}", location);

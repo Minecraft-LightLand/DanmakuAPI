@@ -3,7 +3,7 @@ package dev.xkmc.danmakuapi.init.data;
 import com.tterrag.registrate.providers.RegistrateItemTagsProvider;
 import dev.xkmc.danmakuapi.init.DanmakuAPI;
 import dev.xkmc.danmakuapi.init.registrate.DanmakuItems;
-import mezz.jei.api.constants.Tags;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
@@ -31,7 +31,7 @@ public class DanmakuTagGen {
 		}
 		pvd.addTag(PRESET_SPELL);
 		pvd.addTag(DANMAKU_SHOOTER).addTags(DANMAKU, LASER, CUSTOM_SPELL, PRESET_SPELL);
-		pvd.addTag(ItemTags.create(Tags.HIDDEN_FROM_RECIPE_VIEWERS))
+		pvd.addTag(ItemTags.create(new ResourceLocation("c", "hidden_from_recipe_viewers")))
 				.addTags(DANMAKU, LASER);
 	}
 

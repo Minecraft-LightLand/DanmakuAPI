@@ -15,6 +15,6 @@ public interface DanmakuBullet {
 
 	DisplayType display();
 
-	ItemProviderEntry<Item, ? extends DanmakuItem> get(DyeColor color);
+	ItemProviderEntry<? extends DanmakuItem> get(DyeColor color);
 
 }

@@ -3,34 +3,31 @@ package dev.xkmc.danmakuapi.content.virtual;
 import dev.xkmc.danmakuapi.api.IDanmakuEntity;
 import dev.xkmc.fastprojectileapi.entity.SimplifiedProjectile;
 import dev.xkmc.l2serial.network.SerialPacketBase;
-import dev.xkmc.l2serial.serialization.marker.SerialClass;
-import dev.xkmc.l2serial.serialization.marker.SerialField;
+import dev.xkmc.l2serial.serialization.SerialClass;
 import io.netty.buffer.Unpooled;
-import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.network.connection.ConnectionType;
+import net.minecraftforge.network.NetworkEvent;
 
 import java.util.Arrays;
 import java.util.List;
 
 @SerialClass
-public record DanmakuToClientPacket(Data[] entities, byte[] data, boolean friendly) implements SerialPacketBase<DanmakuToClientPacket> {
+public class DanmakuToClientPacket extends SerialPacketBase {
 
 	@SerialClass
 	public static class Data {
-		@SerialField
+		@SerialClass.SerialField
 		private int typeId;
-		@SerialField
+		@SerialClass.SerialField
 		private int entityId;
-		@SerialField
+		@SerialClass.SerialField
 		private double posX, posY, posZ;
-		@SerialField
+		@SerialClass.SerialField
 		private float pitch, yaw;
-		@SerialField
+		@SerialClass.SerialField
 		private double velX, velY, velZ;
 
 		public void restore(Entity e) {
@@ -41,9 +38,26 @@ public record DanmakuToClientPacket(Data[] entities, byte[] data, boolean friend
 		}
 	}
 
+	@SerialClass.SerialField
+	private Data[] entities;
 
-	public static DanmakuToClientPacket of(RegistryAccess access, List<SimplifiedProjectile> list) {
-		return of(access, list, false);
+	@SerialClass.SerialField
+	private byte[] data;
+
+	@SerialClass.SerialField
+	private boolean friendly;
+
+	public DanmakuToClientPacket() {
+	}
+
+	public DanmakuToClientPacket(Data[] entities, byte[] data, boolean friendly) {
+		this.entities = entities;
+		this.data = data;
+		this.friendly = friendly;
+	}
+
+	public static DanmakuToClientPacket of(List<SimplifiedProjectile> list) {
+		return of(list, false);
 	}
 
 	/**
@@ -52,8 +66,8 @@ public record DanmakuToClientPacket(Data[] entities, byte[] data, boolean friend
 	 * Targeting state is owner-level ({@link IDanmakuEntity#canHurt}), so callers
 	 * evaluate it once per player.
 	 */
-	public static DanmakuToClientPacket of(RegistryAccess access, List<SimplifiedProjectile> list, boolean friendly) {
-		var data = new RegistryFriendlyByteBuf(Unpooled.buffer(), access, ConnectionType.NEOFORGE);
+	public static DanmakuToClientPacket of(List<SimplifiedProjectile> list, boolean friendly) {
+		var data = new FriendlyByteBuf(Unpooled.buffer());
 		var entities = new Data[list.size()];
 		for (int i = 0; i < list.size(); i++) {
 			var e = list.get(i);
@@ -78,9 +92,9 @@ public record DanmakuToClientPacket(Data[] entities, byte[] data, boolean friend
 	}
 
 	@Override
-	public void handle(Player player) {
+	public void handle(NetworkEvent.Context ctx) {
 		var buffer = Unpooled.wrappedBuffer(data);
-		var buf = new RegistryFriendlyByteBuf(buffer, player.registryAccess(), ConnectionType.NEOFORGE);
+		var buf = new FriendlyByteBuf(buffer);
 		for (var dat : entities) {
 			var type = BuiltInRegistries.ENTITY_TYPE.getHolder(dat.typeId);
 			if (type.isEmpty()) break;

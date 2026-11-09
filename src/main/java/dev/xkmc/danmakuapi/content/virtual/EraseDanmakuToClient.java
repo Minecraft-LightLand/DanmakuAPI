@@ -2,17 +2,27 @@ package dev.xkmc.danmakuapi.content.virtual;
 
 import dev.xkmc.fastprojectileapi.entity.SimplifiedProjectile;
 import dev.xkmc.l2serial.network.SerialPacketBase;
-import net.minecraft.world.entity.player.Player;
+import dev.xkmc.l2serial.serialization.SerialClass;
+import net.minecraftforge.network.NetworkEvent;
 
-public record EraseDanmakuToClient(int id, boolean kill) implements SerialPacketBase<EraseDanmakuToClient> {
+@SerialClass
+public class EraseDanmakuToClient extends SerialPacketBase {
 
+	@SerialClass.SerialField
+	private int id;
+	@SerialClass.SerialField
+	private boolean kill;
 
-	public static EraseDanmakuToClient of(SimplifiedProjectile e, boolean kill) {
-		return new EraseDanmakuToClient(e.getId(), kill);
+	public EraseDanmakuToClient() {
+	}
+
+	public EraseDanmakuToClient(SimplifiedProjectile e, boolean kill) {
+		this.id = e.getId();
+		this.kill = kill;
 	}
 
 	@Override
-	public void handle(Player player) {
+	public void handle(NetworkEvent.Context ctx) {
 		DanmakuClientHandler.erase(id, kill);
 	}
 

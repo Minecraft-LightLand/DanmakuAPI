@@ -1,12 +1,12 @@
 package dev.xkmc.danmakuapi.init.registrate;
 
-import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.Codec;
 import com.tterrag.registrate.util.entry.ItemEntry;
+import com.tterrag.registrate.util.entry.RegistryEntry;
 import dev.xkmc.danmakuapi.api.DanmakuBullet;
 import dev.xkmc.danmakuapi.api.DanmakuLaser;
 import dev.xkmc.danmakuapi.content.custom.data.HomingSpellFormData;
 import dev.xkmc.danmakuapi.content.custom.data.RingSpellFormData;
-import dev.xkmc.danmakuapi.content.custom.data.SpellDataHolder;
 import dev.xkmc.danmakuapi.content.item.CustomSpellItem;
 import dev.xkmc.danmakuapi.content.item.DanmakuItem;
 import dev.xkmc.danmakuapi.content.item.LaserItem;
@@ -14,18 +14,13 @@ import dev.xkmc.danmakuapi.content.particle.DanmakuPoofParticleOptions;
 import dev.xkmc.danmakuapi.content.render.DisplayType;
 import dev.xkmc.danmakuapi.init.DanmakuAPI;
 import dev.xkmc.danmakuapi.init.data.DanmakuTagGen;
-import dev.xkmc.l2core.init.reg.simple.DCReg;
-import dev.xkmc.l2core.init.reg.simple.DCVal;
-import dev.xkmc.l2core.init.reg.simple.Val;
 import net.minecraft.core.particles.ParticleType;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.network.RegistryFriendlyByteBuf;
-import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.Locale;
 
@@ -120,10 +115,7 @@ public class DanmakuItems {
 
 	public static final ItemEntry<CustomSpellItem> CUSTOM_SPELL_RING, CUSTOM_SPELL_HOMING;
 
-	public static final Val<ParticleType<DanmakuPoofParticleOptions>> POOF;
-
-	private static final DCReg DC = DCReg.of(DanmakuAPI.REG);
-	public static final DCVal<SpellDataHolder> SPELL_DATA = DC.reg("spell_data", SpellDataHolder.class, true);
+	public static final RegistryEntry<ParticleType<DanmakuPoofParticleOptions>> POOF;
 
 	static {
 
@@ -168,18 +160,13 @@ public class DanmakuItems {
 			}
 		}
 
-		POOF = new Val.Registrate<>(DanmakuAPI.REGISTRATE.simple("danmaku_poof", Registries.PARTICLE_TYPE,
-				() -> new ParticleType<>(false) {
+		POOF = DanmakuAPI.REGISTRATE.simple("danmaku_poof", ForgeRegistries.Keys.PARTICLE_TYPES,
+				() -> new ParticleType<>(false, DanmakuPoofParticleOptions.DESERIALIZER) {
 					@Override
-					public MapCodec<DanmakuPoofParticleOptions> codec() {
+					public Codec<DanmakuPoofParticleOptions> codec() {
 						return DanmakuPoofParticleOptions.CODEC;
 					}
-
-					@Override
-					public StreamCodec<? super RegistryFriendlyByteBuf, DanmakuPoofParticleOptions> streamCodec() {
-						return DanmakuPoofParticleOptions.STREAM_CODEC;
-					}
-				}));
+				});
 	}
 
 	public static void register() {

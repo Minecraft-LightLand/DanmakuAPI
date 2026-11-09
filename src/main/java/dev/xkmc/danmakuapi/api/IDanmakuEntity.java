@@ -11,8 +11,8 @@ import net.minecraft.world.entity.TraceableEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.EntityHitResult;
-import net.neoforged.neoforge.common.NeoForge;
-import net.neoforged.neoforge.entity.PartEntity;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.entity.PartEntity;
 import org.jetbrains.annotations.Nullable;
 
 public interface IDanmakuEntity extends GrazingEntity {
@@ -79,7 +79,7 @@ public interface IDanmakuEntity extends GrazingEntity {
 		}
 		if (self().getOwner() instanceof LivingEntity le) {
 			var event = new DanmakuDamageEvent(le, dmgType, this);
-			NeoForge.EVENT_BUS.post(event);
+			MinecraftForge.EVENT_BUS.post(event);
 			dmgType = event.getSource();
 		}
 		return dmgType;

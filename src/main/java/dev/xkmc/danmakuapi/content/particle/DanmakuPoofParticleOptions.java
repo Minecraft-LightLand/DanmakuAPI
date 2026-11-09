@@ -1,41 +1,39 @@
 package dev.xkmc.danmakuapi.content.particle;
 
-import com.mojang.serialization.MapCodec;
+import com.mojang.brigadier.StringReader;
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import dev.xkmc.danmakuapi.init.registrate.DanmakuItems;
-import net.minecraft.core.particles.DustParticleOptions;
+import net.minecraft.core.particles.DustParticleOptionsBase;
+import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
-import net.minecraft.core.particles.ScalableParticleOptionsBase;
-import net.minecraft.network.RegistryFriendlyByteBuf;
-import net.minecraft.network.codec.ByteBufCodecs;
-import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.util.ExtraCodecs;
 import org.joml.Vector3f;
 
-public class DanmakuPoofParticleOptions extends ScalableParticleOptionsBase {
+public class DanmakuPoofParticleOptions extends DustParticleOptionsBase {
 
-	public static final MapCodec<DanmakuPoofParticleOptions> CODEC =
-			RecordCodecBuilder.mapCodec(i -> i.group(
-					ExtraCodecs.VECTOR3F.fieldOf("color").forGetter((e) -> e.color),
-					SCALE.fieldOf("scale").forGetter(DanmakuPoofParticleOptions::getScale)
-			).apply(i, DanmakuPoofParticleOptions::new));
+	public static final Codec<DanmakuPoofParticleOptions> CODEC = RecordCodecBuilder.create(i -> i.group(
+			ExtraCodecs.VECTOR3F.fieldOf("color").forGetter((e) -> e.color),
+			Codec.FLOAT.fieldOf("scale").forGetter((e) -> e.scale)
+	).apply(i, DanmakuPoofParticleOptions::new));
 
-	public static final StreamCodec<RegistryFriendlyByteBuf, DanmakuPoofParticleOptions> STREAM_CODEC =
-			StreamCodec.composite(
-					ByteBufCodecs.VECTOR3F, (e) -> e.color,
-					ByteBufCodecs.FLOAT, DanmakuPoofParticleOptions::getScale,
-					DanmakuPoofParticleOptions::new);
+	public static final ParticleOptions.Deserializer<DanmakuPoofParticleOptions> DESERIALIZER = new ParticleOptions.Deserializer<>() {
+		public DanmakuPoofParticleOptions fromCommand(ParticleType<DanmakuPoofParticleOptions> type, StringReader reader) throws CommandSyntaxException {
+			Vector3f vector3f = DustParticleOptionsBase.readVector3f(reader);
+			reader.expect(' ');
+			float f = reader.readFloat();
+			return new DanmakuPoofParticleOptions(vector3f, f);
+		}
 
+		public DanmakuPoofParticleOptions fromNetwork(ParticleType<DanmakuPoofParticleOptions> type, FriendlyByteBuf buf) {
+			return new DanmakuPoofParticleOptions(DustParticleOptionsBase.readVector3f(buf), buf.readFloat());
+		}
+	};
 
-	private final Vector3f color;
-
-	public DanmakuPoofParticleOptions(Vector3f color, float scale) {
-		super(scale);
-		this.color = color;
-	}
-
-	public Vector3f getColor() {
-		return this.color;
+	public DanmakuPoofParticleOptions(Vector3f col, float scale) {
+		super(col, scale);
 	}
 
 	public ParticleType<DanmakuPoofParticleOptions> getType() {

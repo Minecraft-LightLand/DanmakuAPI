@@ -2,10 +2,11 @@ package dev.xkmc.danmakuapi.api;
 
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.bus.api.Event;
-import net.neoforged.bus.api.ICancellableEvent;
+import net.minecraftforge.eventbus.api.Cancelable;
+import net.minecraftforge.eventbus.api.Event;
 
-public class DanmakuUseEvent extends Event implements ICancellableEvent {
+@Cancelable
+public class DanmakuUseEvent extends Event {
 
 	private final Player player;
 	private final ItemStack stack;

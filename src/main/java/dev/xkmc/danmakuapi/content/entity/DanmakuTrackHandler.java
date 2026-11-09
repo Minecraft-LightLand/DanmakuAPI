@@ -3,11 +3,11 @@ package dev.xkmc.danmakuapi.content.entity;
 import dev.xkmc.danmakuapi.api.IDanmakuEntity;
 import dev.xkmc.danmakuapi.init.DanmakuAPI;
 import net.minecraft.server.level.ServerPlayer;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 
-@EventBusSubscriber(modid = DanmakuAPI.MODID, bus = EventBusSubscriber.Bus.GAME)
+@EventBusSubscriber(modid = DanmakuAPI.MODID, bus = EventBusSubscriber.Bus.FORGE)
 public class DanmakuTrackHandler {
 
 	@SubscribeEvent

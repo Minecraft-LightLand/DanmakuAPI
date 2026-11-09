@@ -27,7 +27,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
-import net.neoforged.neoforge.common.NeoForge;
+import net.minecraftforge.common.MinecraftForge;
 
 import java.util.List;
 
@@ -58,7 +58,7 @@ public class LaserItem extends Item {
 			return InteractionResultHolder.fail(stack);
 
 		var event = new DanmakuUseEvent(player, stack, cooldown());
-		NeoForge.EVENT_BUS.post(event);
+		MinecraftForge.EVENT_BUS.post(event);
 		if (event.isCanceled()) {
 			return InteractionResultHolder.fail(stack);
 		}
@@ -168,7 +168,7 @@ public class LaserItem extends Item {
 	}
 
 	@Override
-	public void appendHoverText(ItemStack stack, TooltipContext level, List<Component> list, TooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, Level level, List<Component> list, TooltipFlag flag) {
 		list.add(DanmakuLang.DANMAKU_DAMAGE.get(type.damage()));
 	}
 

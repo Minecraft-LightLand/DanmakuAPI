@@ -1,0 +1,41 @@
+modLoader="javafml"
+loaderVersion="[47,)"
+license="LGPL-2.1"
+[[mods]]
+modId="danmaku_api"
+version="${file.jarVersion}"
+displayName="Danmaku API"
+authors="lcy0x1"
+description='''
+Touhou Style Danmaku and Laser
+'''
+[[dependencies.danmaku_api]]
+    modId="forge"
+    mandatory=true
+    versionRange="[47.1.0,)"
+    ordering="NONE"
+    side="BOTH"
+[[dependencies.danmaku_api]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.20.1,1.21)"
+    ordering="NONE"
+    side="BOTH"
+[[dependencies.danmaku_api]]
+    modId="l2library"
+    mandatory=true
+    versionRange="[2.5.5,)"
+    ordering="AFTER"
+    side="BOTH"
+[[dependencies.danmaku_api]]
+    modId="l2damagetracker"
+    mandatory=true
+    versionRange="[0.4.4,)"
+    ordering="AFTER"
+    side="BOTH"
+[[dependencies.danmaku_api]]
+    modId="fast_projectile_api"
+    mandatory=true
+    versionRange="[3.1.1,)"
+    ordering="AFTER"
+    side="BOTH"

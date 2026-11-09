@@ -3,9 +3,8 @@ package dev.xkmc.danmakuapi.content.spell.item;
 import dev.xkmc.danmakuapi.content.spell.spellcard.CardHolder;
 import dev.xkmc.danmakuapi.content.spell.spellcard.Ticker;
 import dev.xkmc.fastprojectileapi.entity.SimplifiedProjectile;
-import dev.xkmc.l2library.content.raytrace.RayTraceUtil;
-import dev.xkmc.l2serial.serialization.marker.SerialClass;
-import dev.xkmc.l2serial.serialization.marker.SerialField;
+import dev.xkmc.l2library.util.raytrace.RayTraceUtil;
+import dev.xkmc.l2serial.serialization.SerialClass;
 import dev.xkmc.l2serial.util.Wrappers;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
@@ -20,11 +19,11 @@ import java.util.UUID;
 @SerialClass
 public class ItemSpell {
 
-	@SerialField
+	@SerialClass.SerialField
 	private final ArrayList<Ticker<?>> tickers = new ArrayList<>();
-	@SerialField
+	@SerialClass.SerialField
 	private UUID targetId;
-	@SerialField
+	@SerialClass.SerialField
 	public Vec3 dir = new Vec3(1, 0, 0), targetPos;
 
 	List<SimplifiedProjectile> cache = new LinkedList<>();

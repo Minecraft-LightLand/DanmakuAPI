@@ -1,13 +1,12 @@
 package dev.xkmc.danmakuapi.content.item;
 
 import dev.xkmc.danmakuapi.content.custom.data.ISpellFormData;
-import dev.xkmc.danmakuapi.content.custom.data.SpellDataHolder;
 import dev.xkmc.danmakuapi.content.custom.screen.ClientCustomSpellHandler;
 import dev.xkmc.danmakuapi.content.spell.item.SpellContainer;
 import dev.xkmc.danmakuapi.init.data.DanmakuLang;
-import dev.xkmc.danmakuapi.init.registrate.DanmakuItems;
-import dev.xkmc.l2library.content.raytrace.IGlowingTarget;
-import dev.xkmc.l2library.content.raytrace.RayTraceUtil;
+import dev.xkmc.l2library.util.raytrace.IGlowingTarget;
+import dev.xkmc.l2library.util.raytrace.RayTraceUtil;
+import dev.xkmc.l2serial.serialization.codec.TagCodec;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
@@ -19,22 +18,29 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
 public class CustomSpellItem extends Item implements IGlowingTarget {
 
-	private final SpellDataHolder def;
+	private final ISpellFormData<?> def;
 	private final boolean requireTarget;
 
 	public CustomSpellItem(Properties properties, boolean requireTarget, ISpellFormData<?> def) {
 		super(properties);
 		this.requireTarget = requireTarget;
-		this.def = new SpellDataHolder(def.cast());
+		this.def = def;
 	}
 
 	private ISpellFormData<?> getData(ItemStack stack) {
-		return DanmakuItems.SPELL_DATA.getOrDefault(stack, def).cast();
+		var tag = stack.getTag();
+		if (tag != null && tag.contains("SpellData")) {
+			var obj = TagCodec.valueFromTag(tag.getCompound("SpellData"), Record.class);
+			if (obj instanceof ISpellFormData<?> dat)
+				return dat;
+		}
+		return def;
 	}
 
 	@Override
@@ -67,7 +73,7 @@ public class CustomSpellItem extends Item implements IGlowingTarget {
 	}
 
 	@Override
-	public void appendHoverText(ItemStack stack, TooltipContext ctx, List<Component> list, TooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> list, TooltipFlag flag) {
 		ISpellFormData<?> data = getData(stack);
 		list.add(DanmakuLang.SPELL_COST.get(data.cost(), data.getAmmoCost().getDefaultInstance().getHoverName()));
 		if (requireTarget) {

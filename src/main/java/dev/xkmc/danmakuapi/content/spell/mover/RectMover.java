@@ -1,13 +1,12 @@
 package dev.xkmc.danmakuapi.content.spell.mover;
 
-import dev.xkmc.l2serial.serialization.marker.SerialClass;
-import dev.xkmc.l2serial.serialization.marker.SerialField;
+import dev.xkmc.l2serial.serialization.SerialClass;
 import net.minecraft.world.phys.Vec3;
 
 @SerialClass
 public final class RectMover extends TargetPosMover {
 
-	@SerialField
+	@SerialClass.SerialField
 	private Vec3 pos = Vec3.ZERO, v = Vec3.ZERO, a = Vec3.ZERO;
 
 	@Deprecated

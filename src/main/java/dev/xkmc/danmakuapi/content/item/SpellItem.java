@@ -4,8 +4,8 @@ import dev.xkmc.danmakuapi.content.spell.item.ItemSpell;
 import dev.xkmc.danmakuapi.content.spell.item.SpellContainer;
 import dev.xkmc.danmakuapi.init.data.DanmakuConfig;
 import dev.xkmc.danmakuapi.init.data.DanmakuLang;
-import dev.xkmc.l2library.content.raytrace.IGlowingTarget;
-import dev.xkmc.l2library.content.raytrace.RayTraceUtil;
+import dev.xkmc.l2library.util.raytrace.IGlowingTarget;
+import dev.xkmc.l2library.util.raytrace.RayTraceUtil;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
@@ -13,13 +13,11 @@ import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ProjectileWeaponItem;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,7 +64,7 @@ public class SpellItem extends ProjectileWeaponItem implements IGlowingTarget {
 	}
 
 	@Override
-	public void appendHoverText(ItemStack stack, TooltipContext level, List<Component> list, TooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, Level level, List<Component> list, TooltipFlag flag) {
 		list.add(DanmakuLang.SPELL_COST.get(1, pred.get().getDefaultInstance().getHoverName()));
 		if (requireTarget) {
 			list.add(DanmakuLang.SPELL_TARGET.get());
@@ -88,11 +86,6 @@ public class SpellItem extends ProjectileWeaponItem implements IGlowingTarget {
 	@Override
 	public int getDefaultProjectileRange() {
 		return 40;
-	}
-
-	@Override
-	protected void shootProjectile(LivingEntity le, Projectile projectile, int i, float v, float v1, float v2, @Nullable LivingEntity target) {
-
 	}
 
 	@Override

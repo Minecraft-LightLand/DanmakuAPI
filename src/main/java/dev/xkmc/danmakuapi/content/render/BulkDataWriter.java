@@ -21,7 +21,7 @@ public class BulkDataWriter {
 	}
 
 	public void addVertex(float x, float y, float z, float u, float v, int col) {
-		vc.addVertex(x, y, z).setUv(u, v).setColor(col);
+		vc.vertex(x, y, z).uv(u, v).color(col).endVertex();
 	}
 
 	public void flush() {

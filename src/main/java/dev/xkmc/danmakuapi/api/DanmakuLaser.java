@@ -9,7 +9,7 @@ public interface DanmakuLaser {
 
 	int damage();
 
-	ItemProviderEntry<Item, ? extends LaserItem> get(DyeColor color);
+	ItemProviderEntry<? extends LaserItem> get(DyeColor color);
 
 	default boolean setupLength() {
 		return false;

@@ -1,16 +1,15 @@
 package dev.xkmc.danmakuapi.content.spell.mover;
 
 import dev.xkmc.danmakuapi.content.entity.DanmakuHelper;
-import dev.xkmc.l2serial.serialization.marker.SerialClass;
-import dev.xkmc.l2serial.serialization.marker.SerialField;
+import dev.xkmc.l2serial.serialization.SerialClass;
 import net.minecraft.world.phys.Vec3;
 
 @SerialClass
 public final class PolarMover extends TargetPosMover {
 
-	@SerialField
+	@SerialClass.SerialField
 	public Vec3 p, v, a, n, f;
-	@SerialField
+	@SerialClass.SerialField
 	public double r, vr, va, th, w, b;
 
 	@Deprecated

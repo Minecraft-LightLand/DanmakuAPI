@@ -2,7 +2,7 @@ package dev.xkmc.danmakuapi.api;
 
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.neoforged.bus.api.Event;
+import net.minecraftforge.eventbus.api.Event;
 
 /** Predicate danmaku damage */
 public class DanmakuHurtEvent extends Event {
@@ -19,11 +19,11 @@ public class DanmakuHurtEvent extends Event {
 		this.ans = ans;
 	}
 
-	public boolean getResult() {
+	public boolean getAnswer() {
 		return ans;
 	}
 
-	public void setResult(boolean ans) {
+	public void setAnswer(boolean ans) {
 		this.ans = ans;
 	}
 

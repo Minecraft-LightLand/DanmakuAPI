@@ -17,7 +17,7 @@ import dev.xkmc.danmakuapi.init.data.DanmakuLang;
 import dev.xkmc.danmakuapi.init.registrate.DanmakuEntities;
 import dev.xkmc.fastprojectileapi.render.ProjTypeHolder;
 import dev.xkmc.fastprojectileapi.render.RenderableProjectileType;
-import dev.xkmc.l2library.content.raytrace.RayTraceUtil;
+import dev.xkmc.l2library.util.raytrace.RayTraceUtil;
 import dev.xkmc.l2serial.util.Wrappers;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
@@ -33,7 +33,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.common.NeoForge;
+import net.minecraftforge.common.MinecraftForge;
 
 import java.util.List;
 
@@ -68,7 +68,7 @@ public class DanmakuItem extends Item {
 		if (GrazeHelper.forbidDanmaku(player))
 			return InteractionResultHolder.fail(stack);
 		var event = new DanmakuUseEvent(player, stack, cooldown());
-		NeoForge.EVENT_BUS.post(event);
+		MinecraftForge.EVENT_BUS.post(event);
 		if (event.isCanceled()) {
 			return InteractionResultHolder.fail(stack);
 		}
@@ -149,7 +149,7 @@ public class DanmakuItem extends Item {
 	}
 
 	@Override
-	public void appendHoverText(ItemStack stack, TooltipContext level, List<Component> list, TooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, Level level, List<Component> list, TooltipFlag flag) {
 		list.add(DanmakuLang.DANMAKU_DAMAGE.get(type.damage()));
 		if (type.bypass())
 			list.add(DanmakuLang.DANMAKU_BYPASS.get());
@@ -165,14 +165,12 @@ public class DanmakuItem extends Item {
 	 */
 	protected RenderableDanmakuType<?, ?> buildRenderer() {
 		var loc = DanmakuAPI.loc("textures/entity/bullet/" + type.getName() + "/" + color.getName() + ".png");
-		return switch (type) {
-			case BUTTERFLY -> new ButterflyProjectileType(loc, type.display(), 20);
-			case SPARK -> new RotatingProjectileType(loc, type.display(), 20);
-			case STAR -> new RotatingProjectileType(loc, type.display(), 40);
-			case CARD -> new FlatProjectileType(loc, type.display(), 60);
-			case DAGGER -> new ItemModelProjectileType(this, type.display(), 0);
-			default -> new SimpleProjectileType(loc, type.display());
-		};
+		if (type == BUTTERFLY) return new ButterflyProjectileType(loc, type.display(), 20);
+		if (type == SPARK) return new RotatingProjectileType(loc, type.display(), 20);
+		if (type == STAR) return new RotatingProjectileType(loc, type.display(), 40);
+		if (type == CARD) return new FlatProjectileType(loc, type.display(), 60);
+		if (type == DAGGER) return new ItemModelProjectileType(this, type.display(), 0);
+		return new SimpleProjectileType(loc, type.display());
 	}
 
 	private ProjTypeHolder<? extends RenderableProjectileType<?, ?>, ?> render;

@@ -9,10 +9,8 @@ import dev.xkmc.danmakuapi.content.spell.mover.MoverInfo;
 import dev.xkmc.danmakuapi.content.spell.spellcard.CardHolder;
 import dev.xkmc.danmakuapi.content.spell.spellcard.TrailAction;
 import dev.xkmc.fastprojectileapi.entity.ProjectileMovement;
-import dev.xkmc.l2serial.serialization.marker.SerialClass;
-import dev.xkmc.l2serial.serialization.marker.SerialField;
+import dev.xkmc.l2serial.serialization.SerialClass;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ItemSupplier;
@@ -23,13 +21,13 @@ import net.minecraft.world.phys.Vec3;
 @SerialClass
 public class ItemBulletEntity extends DanmakuBulletEntity implements ItemSupplier {
 
-	@SerialField
+	@SerialClass.SerialField
 	public int controlCode = 0;
-	@SerialField
+	@SerialClass.SerialField
 	public DanmakuMover mover = null;
-	@SerialField
+	@SerialClass.SerialField
 	public TrailAction afterExpiry = null;
-	@SerialField
+	@SerialClass.SerialField
 	public ItemStack stack = ItemStack.EMPTY;
 
 	private boolean isErased = false;
@@ -69,20 +67,20 @@ public class ItemBulletEntity extends DanmakuBulletEntity implements ItemSupplie
 		return stack;
 	}
 
-	protected void defineSynchedData(SynchedEntityData.Builder builder) {
+	protected void defineSynchedData() {
 	}
 
 	public void addAdditionalSaveData(CompoundTag nbt) {
 		super.addAdditionalSaveData(nbt);
 		if (!stack.isEmpty()) {
-			nbt.put("Item", stack.save(level().registryAccess()));
+			nbt.put("Item", stack.save(new CompoundTag()));
 		}
 
 	}
 
 	public void readAdditionalSaveData(CompoundTag nbt) {
 		super.readAdditionalSaveData(nbt);
-		ItemStack itemstack = ItemStack.parseOptional(level().registryAccess(), nbt.getCompound("Item"));
+		ItemStack itemstack = ItemStack.of(nbt.getCompound("Item"));
 		this.setItem(itemstack);
 	}
 

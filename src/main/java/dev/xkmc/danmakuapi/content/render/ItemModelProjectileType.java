@@ -14,7 +14,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.neoforge.client.model.data.ModelData;
+import net.minecraftforge.client.model.data.ModelData;
 import org.joml.Matrix4f;
 import org.joml.Vector4f;
 
@@ -124,9 +124,9 @@ public record ItemModelProjectileType(Item item, DisplayType display, double spi
 				int o = i * STRIDE;
 				var pos = new Vector4f(Float.intBitsToFloat(d[o]), Float.intBitsToFloat(d[o + 1]),
 						Float.intBitsToFloat(d[o + 2]), 1).mul(m4);
-				vc.addVertex(pos.x(), pos.y(), pos.z())
-						.setUv(Float.intBitsToFloat(d[o + 4]), Float.intBitsToFloat(d[o + 5]))
-						.setColor(color(d[o + 3], shade));
+				vc.vertex(pos.x(), pos.y(), pos.z())
+						.uv(Float.intBitsToFloat(d[o + 4]), Float.intBitsToFloat(d[o + 5]))
+						.color(color(d[o + 3], shade)).endVertex();
 			}
 		}
 

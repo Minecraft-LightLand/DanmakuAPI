@@ -18,15 +18,15 @@ public class DanmakuManager {
 			// targeting state is owner-level, so evaluate once per player for the whole batch
 			for (ServerPlayer sp : sl.getChunkSource().chunkMap.getPlayers(new ChunkPos(user.blockPosition()), false)) {
 				boolean friendly = !IDanmakuEntity.canHurt(user, sp);
-				DanmakuAPI.HANDLER.toClientPlayer(DanmakuToClientPacket.of(user.registryAccess(), proj, friendly), sp);
+				DanmakuAPI.HANDLER.toClientPlayer(DanmakuToClientPacket.of(proj, friendly), sp);
 			}
 			return;
 		}
-		DanmakuAPI.HANDLER.toTrackingPlayers(DanmakuToClientPacket.of(user.registryAccess(), proj), user);
+		DanmakuAPI.HANDLER.toTrackingPlayers(DanmakuToClientPacket.of(proj), user);
 	}
 
 	public static void erase(LivingEntity user, SimplifiedProjectile proj, boolean kill) {
-		DanmakuAPI.HANDLER.toTrackingPlayers(EraseDanmakuToClient.of(proj, kill), user);
+		DanmakuAPI.HANDLER.toTrackingPlayers(new EraseDanmakuToClient(proj, kill), user);
 	}
 
 }

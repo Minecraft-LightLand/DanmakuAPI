@@ -1,14 +1,13 @@
 package dev.xkmc.danmakuapi.content.spell.spellcard;
 
-import dev.xkmc.l2serial.serialization.marker.SerialClass;
-import dev.xkmc.l2serial.serialization.marker.SerialField;
+import dev.xkmc.l2serial.serialization.SerialClass;
 
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 
 @SerialClass
 public class Ticker<T> {
 
-	@SerialField
+	@SerialClass.SerialField
 	public int tick;
 
 	@OverridingMethodsMustInvokeSuper

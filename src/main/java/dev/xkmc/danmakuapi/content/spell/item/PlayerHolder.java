@@ -56,8 +56,7 @@ public record PlayerHolder(
 				e.afterExpiry.setup(this);
 			}
 		}
-		if (danmaku instanceof SimplifiedProjectile sp)
-			spell.cache.add(sp);
+		spell.cache.add(danmaku);
 		if (self().level() instanceof ServerLevel sl)
 			EntityStorageHelper.fastAdd(sl, danmaku);
 	}

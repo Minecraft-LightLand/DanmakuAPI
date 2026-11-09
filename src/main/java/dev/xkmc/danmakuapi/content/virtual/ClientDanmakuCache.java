@@ -9,7 +9,6 @@ import dev.xkmc.fastprojectileapi.render.ProjectileRenderer;
 import dev.xkmc.l2serial.util.Wrappers;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import net.minecraft.client.Camera;
-import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -84,8 +83,7 @@ public class ClientDanmakuCache implements ClientObjectCache {
 		}
 	}
 
-	public void renderAll(Camera cam, Frustum frustum, PoseStack pose, DeltaTracker delta, MultiBufferSource.BufferSource buffer) {
-		float pTick = delta.getGameTimeDeltaPartialTick(true);
+	public void renderAll(Camera cam, Frustum frustum, PoseStack pose, float pTick, MultiBufferSource.BufferSource buffer) {
 		Vec3 vec3 = cam.getPosition();
 		double d0 = vec3.x();
 		double d1 = vec3.y();
@@ -141,16 +139,18 @@ public class ClientDanmakuCache implements ClientObjectCache {
 		LevelRenderer.renderLineBox(pose, vc, aabb, 1.0F, 1.0F, 1.0F, 1.0F);
 		Vec3 vec3 = e.getViewVector(pTick);
 		Matrix4f mat4 = pose.last().pose();
-		var mat3 = pose.last();
-		vc.addVertex(mat4, 0.0F, e.getEyeHeight(), 0.0F)
-				.setColor(0, 0, 255, 255)
-				.setNormal(mat3, (float) vec3.x, (float) vec3.y, (float) vec3.z);
-		vc.addVertex(mat4,
+		var mat3 = pose.last().normal();
+		vc.vertex(mat4, 0.0F, e.getEyeHeight(), 0.0F)
+				.color(0, 0, 255, 255)
+				.normal(mat3, (float) vec3.x, (float) vec3.y, (float) vec3.z)
+				.endVertex();
+		vc.vertex(mat4,
 						(float) (vec3.x * 2.0D),
 						(float) (e.getEyeHeight() + vec3.y * 2.0D),
 						(float) (vec3.z * 2.0D)
-				).setColor(0, 0, 255, 255)
-				.setNormal(mat3, (float) vec3.x, (float) vec3.y, (float) vec3.z);
+				).color(0, 0, 255, 255)
+				.normal(mat3, (float) vec3.x, (float) vec3.y, (float) vec3.z)
+				.endVertex();
 	}
 
 	public static void renderPlayerHitbox(PoseStack pose, VertexConsumer vc, Player e, double camx, double camy, double camz, float pTick) {
